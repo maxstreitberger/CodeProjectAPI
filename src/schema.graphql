@@ -1,5 +1,4 @@
 type Query {
-  info: String!
   events: [Event!]!
 }
 
@@ -14,7 +13,6 @@ type Mutation {
     street_and_house_number: String
     city: String
     country: String
-    user_id: String!
   ): Event!
   register(username: String!, email: String!, password: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
@@ -29,7 +27,7 @@ type User {
   user_id: String
   username: String
   email: String        
-  event: [Event!]!
+  events: [Event!]!
 }
 
 type Event {

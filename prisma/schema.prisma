@@ -21,7 +21,7 @@ model Event {
   meeting_link            String?
   created_at              DateTime?     @default(now())
   host_id                 String
-  user                    User          @relation(fields: [host_id], references: [user_id])
+  host                    User          @relation(fields: [host_id], references: [user_id])
   participant             Participant[]
   survey                  Survey[]
   task                    Task[]
@@ -98,10 +98,10 @@ model User {
   last_name                       String?
   username                        String
   email                           String        @unique
-  pass_crypt                      String
+  password                        String
   creation_time                   DateTime?     @default(now())
   last_login                      DateTime?     @default(now())
-  event                           Event[]
+  events                          Event[]
   friend_Friend_follower_idToUser Friend[]      @relation("Friend_follower_idToUser")
   friend_Friend_user_idToUser     Friend[]      @relation("Friend_user_idToUser")
   participant                     Participant[]
