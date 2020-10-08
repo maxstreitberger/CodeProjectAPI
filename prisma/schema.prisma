@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  event_id                String        @id @default(dbgenerated())
+  title                   String?
+  date                    String?
+  event_start             String?
+  description             String?
+  is_public               Boolean
+  event_type              String?
+  street_and_house_number String?
+  city                    String?
+  country                 String?
+  meeting_link            String?
+  created_at              DateTime?     @default(now())
+  host_id                 String
+  user                    User          @relation(fields: [host_id], references: [user_id])
+  participant             Participant[]
+  survey                  Survey[]
+  task                    Task[]
+  user_Event              User_Event[]
+  vote                    Vote[]
+}
+
+model Friend {
+  user_id                       String
+  follower_id                   String
+  follows_since                 DateTime? @default(now())
+  user_Friend_follower_idToUser User      @relation("Friend_follower_idToUser", fields: [follower_id], references: [user_id])
+  user_Friend_user_idToUser     User      @relation("Friend_user_idToUser", fields: [user_id], references: [user_id])
+
+  @@id([user_id, follower_id])
+}
+
+model Participant {
+  event_id  String
+  task_id   String
+  user_id   String
+  joined_at DateTime? @default(now())
+  left_at   DateTime?
+  event     Event     @relation(fields: [event_id], references: [event_id])
+  task      Task      @relation(fields: [task_id], references: [task_id])
+  user      User      @relation(fields: [user_id], references: [user_id])
+
+  @@id([event_id, task_id, user_id])
+}
+
+model PrivateTask {
+  task_id     String    @id @default(dbgenerated())
+  user_id     String
+  title       String
+  description String?
+  deadline    String?
+  created_at  DateTime? @default(now())
+  user        User      @relation(fields: [user_id], references: [user_id])
+}
+
+model Survey {
+  survey_id    String         @id @default(dbgenerated())
+  event_id     String
+  question     String
+  created_at   DateTime?      @default(now())
+  event        Event          @relation(fields: [event_id], references: [event_id])
+  surveyAnswer SurveyAnswer[]
+  vote         Vote[]
+}
+
+model SurveyAnswer {
+  answer_id  String    @id @default(dbgenerated())
+  survey_id  String
+  answer     String?
+  created_at DateTime? @default(now())
+  likes      Int?      @default(0)
+  survey     Survey    @relation(fields: [survey_id], references: [survey_id])
+}
+
+model Task {
+  task_id     String        @id @default(dbgenerated())
+  event_id    String
+  title       String
+  description String?
+  deadline    String?
+  created_at  DateTime?     @default(now())
+  event       Event         @relation(fields: [event_id], references: [event_id])
+  participant Participant[]
+}
+
+model User {
+  user_id                         String        @id @default(dbgenerated())
+  first_name                      String?
+  last_name                       String?
+  username                        String
+  email                           String        @unique
+  pass_crypt                      String
+  creation_time                   DateTime?     @default(now())
+  last_login                      DateTime?     @default(now())
+  event                           Event[]
+  friend_Friend_follower_idToUser Friend[]      @relation("Friend_follower_idToUser")
+  friend_Friend_user_idToUser     Friend[]      @relation("Friend_user_idToUser")
+  participant                     Participant[]
+  privateTask                     PrivateTask[]
+  user_Event                      User_Event[]
+  vote                            Vote[]
+}
+
+model User_Event {
+  event_id  String
+  user_id   String
+  joined_at DateTime? @default(now())
+  event     Event     @relation(fields: [event_id], references: [event_id])
+  user      User      @relation(fields: [user_id], references: [user_id])
+
+  @@id([event_id, user_id])
+}
+
+model Vote {
+  survey_id String
+  user_id   String
+  event_id  String
+  voted_at  DateTime? @default(now())
+  event     Event     @relation(fields: [event_id], references: [event_id])
+  survey    Survey    @relation(fields: [survey_id], references: [survey_id])
+  user      User      @relation(fields: [user_id], references: [user_id])
+
+  @@id([survey_id, user_id, event_id])
+}
