@@ -16,6 +16,20 @@ type Mutation {
     country: String
     user_id: String!
   ): Event!
+  register(username: String!, email: String!, password: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+}
+
+type AuthPayload {
+  user: User
+  token: String
+}
+
+type User {
+  user_id: String
+  username: String
+  email: String        
+  event: [Event!]!
 }
 
 type Event {
@@ -30,5 +44,5 @@ type Event {
   city: String
   country: String
   meeting_link: String
-  host_id: String!
+  host: User
 }
