@@ -1,1 +1,1 @@
-# graphqlAPI
+# CODE Project GraphQL API
