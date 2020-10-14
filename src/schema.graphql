@@ -1,9 +1,24 @@
 type Query {
   events: [Event!]!
   event(event_id: String!): Event!
+  user(user_id: String!): User!
+  allUsers: [User!]!
 }
 
 type Mutation {
+  #User functions
+  register(username: String!, email: String!, password: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+  updateUser(user_id: String!, 
+             username: String,
+             first_name: String,
+             last_name: String,
+             email: String): User!
+  deleteUser(user_id: String!): User!
+  joinEvent(user_id: String!, event_id: String!): User_Event!
+
+
+  #Event functions
   post(
     title: String!
     date: String
@@ -26,8 +41,6 @@ type Mutation {
               street_and_house_number: String,
               city: String,
               country: String): Event!
-  register(username: String!, email: String!, password: String!): AuthPayload
-  login(email: String!, password: String!): AuthPayload
 }
 
 type AuthPayload {
@@ -38,6 +51,8 @@ type AuthPayload {
 type User {
   user_id: String
   username: String
+  first_name: String
+  last_name: String
   email: String        
   events: [Event!]!
 }
@@ -55,4 +70,11 @@ type Event {
   country: String
   meeting_link: String
   host: User
+}
+
+type User_Event {
+  event_id: String
+  user_id: String
+  Event: Event  
+  User: User  
 }
