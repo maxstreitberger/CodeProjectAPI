@@ -8,6 +8,8 @@ At the moment is nothing in the `master` branch. So after cloning the repository
 To run the API, you just use this command: \
 `node src/index.js`
 
+Before you can run the API, you should also add replace the two `.env-sample` files with `.env` files.
+
 ## Database
 For my project, I'm using a local PostgreSQL database at the moment. To connect it with my API I'm using Prisma, which needs a database URL.
 You can either paste your database URL directly into the database source:
