@@ -1,13 +1,12 @@
 const jwt = require('jsonwebtoken')
-const APP_SECRET = 'CODE-PROJECT'
+const APP_SECRET = '$2b$12$CoS0iFO/nMe51YEffzEBxO8wDjtKdBS/OFG9LWf4kRF0jLT.2P.Ke'
 
 function getUserId(context) {
   const authorization = context.request.get('Authorization')
   if (authorization) {
     const token = authorization.replace('Bearer ', '')
-    const { userId } = jwt.verify(token, APP_SECRET)
-    console.log('👨🏽‍💻: '+ userId)
-    return userId
+    const { sub } = jwt.verify(token, APP_SECRET)
+    return sub
   }
 
   throw new Error('Not authenticated')
