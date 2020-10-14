@@ -54,8 +54,8 @@ async function register(parent, args, context, info) {
       password: password
     }
   })
-
-  const token = jwt.sign({ userId: user.user_id }, APP_SECRET)
+  
+  const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email }, APP_SECRET, {expiresIn: 2419200})
 
   return {
     user,
@@ -69,7 +69,7 @@ async function login(parent, args, context, info) {
       email: args.email
     }
   })
-  console.log(user)
+
   if (!user) {
     throw new Error('Invalid credentials')
   }
@@ -80,7 +80,7 @@ async function login(parent, args, context, info) {
     throw new Error('Invalid credentials')
   }
 
-  const token = jwt.sign({ userId: user.user_id }, APP_SECRET)
+  const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email }, APP_SECRET, {expiresIn: 2419200})
 
   return {
     user,
@@ -88,10 +88,37 @@ async function login(parent, args, context, info) {
   }
 }
 
+async function updateUser(parent, args, context) {
+  return context.prisma.user.update({
+    where: { user_id: args.user_id },
+    data: {
+      ...args
+    }
+  })
+}
+
+async function deleteUser(parent, args, context) {
+  return context.prisma.user.delete({
+    where: { user_id: args.user_id },
+  })
+}
+
+async function joinEvent(parent, args, context) {
+  return context.prisma.user_Event.create({
+    data: {
+      User: { connect: { user_id: args.user_id }},
+      Event: { connect: { event_id: args.event_id }},
+    }
+  })
+}
+
 module.exports = {
   post,
   deleteEvent,
+  updateEvent,
   register,
   login,
-  updateEvent
+  updateUser,
+  deleteUser,
+  joinEvent
 }
