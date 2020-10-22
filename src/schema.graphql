@@ -7,6 +7,7 @@ type Query {
 
 type Mutation {
   #User functions
+  registerAdmin(username: String!, email: String!, password: String!): AuthPayload
   register(username: String!, email: String!, password: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   updateUser(user_id: String!, 
@@ -55,6 +56,12 @@ type User {
   last_name: String
   email: String        
   events: [Event!]!
+  role: UserRole
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }
 
 type Event {
@@ -64,12 +71,17 @@ type Event {
   event_start: String
   description: String
   is_public: Boolean!
-  event_type: String!
+  event_type: EventType!
   street_and_house_number: String
   city: String
   country: String
   meeting_link: String
   host: User
+}
+
+enum EventType {
+  LOCAL
+  ONLINE
 }
 
 type User_Event {

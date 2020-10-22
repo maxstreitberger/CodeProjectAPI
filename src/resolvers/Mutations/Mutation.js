@@ -1,14 +1,15 @@
+require('dotenv').config()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../../utils')
+const APP_SECRET = process.env.KEY
 
 async function post(parent, args, context, info) {
-  const userID = getUserId(context)
+  const userID = context.user.user_id
   const newEvent = context.prisma.event.create({
     data: {
       title: args.title,
-      date: args.date,
-      event_start: args.event_start,
+      date: new Date(args.date),
+      event_start: new Date(args.event_start),
       description: args.description,
       is_public: args.is_public,
       event_type: args.event_type,
@@ -34,13 +35,33 @@ async function deleteEvent(parent, args, context, info) {
 }
 
 async function updateEvent(parent, args, context, info) {
-  console.log(args)
   return context.prisma.event.update({
     where: { event_id: args.event_id },
     data: { 
       ...args
     }
   })
+}
+
+async function registerAdmin(parent, args, context, info) {
+  const password = await bcrypt.hash(args.password, 10)
+  const user = await context.prisma.user.create({
+    data: {
+      first_name: "",
+      last_name: "",
+      username: args.username,
+      email: args.email,
+      password: password,
+      role: 'ADMIN'
+    }
+  })
+
+  const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email, role: user.role }, APP_SECRET, {expiresIn: 2419200})
+
+  return {
+    user,
+    token
+  }
 }
 
 async function register(parent, args, context, info) {
@@ -51,11 +72,12 @@ async function register(parent, args, context, info) {
       last_name: "",
       username: args.username,
       email: args.email,
-      password: password
+      password: password,
+      role: 'USER'
     }
   })
-  
-  const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email }, APP_SECRET, {expiresIn: 2419200})
+
+  const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email, role: user.role }, APP_SECRET, {expiresIn: 2419200})
 
   return {
     user,
@@ -80,7 +102,7 @@ async function login(parent, args, context, info) {
     throw new Error('Invalid credentials')
   }
 
-  const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email }, APP_SECRET, {expiresIn: 2419200})
+  const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email, role: user.role }, APP_SECRET, {expiresIn: 2419200})
 
   return {
     user,
@@ -116,6 +138,7 @@ module.exports = {
   post,
   deleteEvent,
   updateEvent,
+  registerAdmin,
   register,
   login,
   updateUser,
