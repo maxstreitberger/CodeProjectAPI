@@ -4,17 +4,17 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Event {
   event_id                String      @id @default(cuid())
   title                   String?
-  date                    String?     @default(dbgenerated())
-  event_start             String?     @default(dbgenerated())
+  date                    String?   @default(dbgenerated())
+  event_start             String?   @default(dbgenerated())
   description             String?
   is_public               Boolean?
-  event_type              EventType?
+  event_type              event_type?
   street_and_house_number String?
   city                    String?
   country                 String?
@@ -31,18 +31,18 @@ model User {
   username   String?
   email      String?   @unique
   password   String?
-  role       Role?
+  role       role?
   created_at DateTime? @default(now())
   last_login DateTime? @default(now())
   Event      Event[]
 }
 
-enum EventType {
+enum event_type {
   LOCAL
   ONLINE
 }
 
-enum Role {
+enum role {
   ADMIN
   USER
 }
