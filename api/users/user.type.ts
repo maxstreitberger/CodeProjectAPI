@@ -1,4 +1,5 @@
 import { objectType } from '@nexus/schema'
+import { db } from '../db'
 
 const User = objectType({
   name: "User",
@@ -9,6 +10,14 @@ const User = objectType({
     t.string('last_name')
     t.string('email')
     t.string('role')
+    t.list.field('events', {
+      type: "Event",
+      nullable: false,
+      resolve: async (root, _args, { db }) => {
+        //@ts-ignore
+        return await db.user.findOne({ where: { user_id: root.user_id } }).events()
+      }
+    })
   }
 })
 

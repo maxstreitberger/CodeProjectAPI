@@ -17,7 +17,12 @@ export const EventMutations = extendType({
             title: args.title,
             description: args.description,
             date: args.date,
-            event_start: args.event_start
+            event_start: args.event_start,
+            host: {
+              connect: {
+                user_id: ctx.user.user_id
+              }
+            }
           }
         })
       }
