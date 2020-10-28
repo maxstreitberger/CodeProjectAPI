@@ -11,5 +11,7 @@ export const permissions = shield({
   Mutation: {
     ...EventMutationPermissions,
     ...UserMutationPermissions
-  }
+  },
+}, {
+  allowExternalErrors: true
 })
