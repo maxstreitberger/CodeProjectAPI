@@ -1,7 +1,7 @@
 import { rule } from 'graphql-shield'
 import { User, Role } from '@prisma/client'
 
-export const rules = {
+export const role = {
   isAdmin: rule()(async (root, args, { user }) => {
     return is.admin(user)
   }),

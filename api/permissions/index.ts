@@ -1,13 +1,12 @@
 import { shield } from 'graphql-shield'
-import { auth } from './auth'
-import { EventPermissions } from '../events/event.permissions'
-
-export const rules = {
-  ...auth
-}
+import { EventMutationPermissions, EventQueryPermissions } from '../events/event.permissions'
 
 export const permissions = shield({
+  Query: {
+    ...EventQueryPermissions
+  },
+
   Mutation: {
-    ...EventPermissions
+    ...EventMutationPermissions
   }
 })

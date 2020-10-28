@@ -17,7 +17,7 @@ export const getUserFromRequest = async (req: Request) => {
         "user_id": sub,
         "role": role
       }
-      console.log(role)
+
       return user
     } catch (e) {
       console.log(e)
