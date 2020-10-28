@@ -101,61 +101,11 @@
       "arity": "Optional"
     },
     {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "date"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "date"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "dbgenerated()"
-    },
-    {
       "tag": "CreateField",
       "model": "Event",
       "field": "event_start",
       "type": "String",
       "arity": "Optional"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "event_start"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Event",
-          "field": "event_start"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "dbgenerated()"
     },
     {
       "tag": "CreateField",
@@ -290,6 +240,13 @@
       },
       "argument": "references",
       "value": "[user_id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Event",
+      "field": "joinedEvents",
+      "type": "User_Event",
+      "arity": "List"
     },
     {
       "tag": "CreateModel",
@@ -461,6 +418,178 @@
       "field": "events",
       "type": "Event",
       "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "joinedEvents",
+      "type": "User_Event",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "User_Event"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User_Event",
+      "field": "event_id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User_Event",
+      "field": "user_id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User_Event",
+      "field": "joined_at",
+      "type": "DateTime",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User_Event",
+          "field": "joined_at"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User_Event",
+          "field": "joined_at"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User_Event",
+      "field": "event",
+      "type": "Event",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User_Event",
+          "field": "event"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User_Event",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User_Event",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User_Event",
+      "field": "user",
+      "type": "User",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User_Event",
+          "field": "user"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User_Event",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User_Event",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "User_Event"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Model",
+          "model": "User_Event"
+        },
+        "directive": "id"
+      },
+      "argument": "",
+      "value": "[event_id, user_id]"
     }
   ]
 }

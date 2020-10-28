@@ -18,6 +18,8 @@ export const Event = objectType({
       type: 'User',
       nullable: false,
       resolve: async (root, _args, { db }) => {
+        console.log('Event Root:')
+        console.log(root)
         //@ts-ignore
         return root.host || (await db.event.findOne({ where: { event_id: root.event_id } }).host())
       },
