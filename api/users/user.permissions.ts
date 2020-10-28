@@ -7,5 +7,7 @@ export const UserQueryPermissions = {
 
 export const UserMutationPermissions = {
   login: not(rules.isAuthenticated),
-  register: not(rules.isAuthenticated)
+  register: not(rules.isAuthenticated),
+  updateUser: rules.isAuthenticated,
+  deleteUser: rules.isAuthenticated
 }

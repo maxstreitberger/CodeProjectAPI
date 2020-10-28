@@ -102,8 +102,19 @@ const UpdateUserData = mutationField('updateUser', {
   }
 })
 
+const DeleteUser = mutationField('deleteUser', {
+  type: 'User',
+  args: {
+    user_id: stringArg({ required: true })
+  },
+  resolve (_root, args, { db }) {
+    return db.user.delete({ where: { user_id: args.user_id } })
+  }
+})
+
 export const UserMutations = [
   Register,
   Login,
-  UpdateUserData
+  UpdateUserData,
+  DeleteUser
 ]

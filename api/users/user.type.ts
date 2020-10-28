@@ -27,7 +27,7 @@ const AuthPayload = objectType({
     t.field('user', { type: 'User' })
     t.string('token')
   }
-}) 
+})
 
 export const UserTypes = [
   AuthPayload,
