@@ -18,11 +18,19 @@ export const Event = objectType({
       type: 'User',
       nullable: false,
       resolve: async (root, _args, { db }) => {
-        console.log('Event Root:')
         console.log(root)
         //@ts-ignore
         return root.host || (await db.event.findOne({ where: { event_id: root.event_id } }).host())
-      },
+      }
+    })
+    t.list.field('tasks', {
+      type: 'EventTask',
+      nullable: false,
+      resolve: async (root, _args, { db }) => {
+        console.log(root)
+        //@ts-ignore
+        return root.tasks || (await db.event.findOne({ where: { event_id: root.event_id } }).tasks())
+      }
     })
   }
 })

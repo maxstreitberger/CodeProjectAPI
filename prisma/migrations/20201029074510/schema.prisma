@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Event {
@@ -51,15 +51,13 @@ model User_Event {
 }
 
 model EventTask {
-  task_id     String            @id @default(cuid())
+  event_task_id     String      @id @default(cuid())
   event_id          String?
   title             String?
   description       String?
   deadline          String?
   created_at        DateTime?   @default(now())
   event             Event?      @relation(fields: [event_id], references: [event_id])
-  user_id           String?
-  createdBy         User?       @relation(fields: [user_id], references: [user_id])
 }
 
 enum EventType {
