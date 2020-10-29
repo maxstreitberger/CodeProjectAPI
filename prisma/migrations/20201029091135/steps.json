@@ -1,0 +1,235 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateModel",
+      "model": "PrivateTask"
+    },
+    {
+      "tag": "CreateField",
+      "model": "PrivateTask",
+      "field": "task_id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "PrivateTask",
+          "field": "task_id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "PrivateTask",
+          "field": "task_id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "PrivateTask",
+          "field": "task_id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "PrivateTask",
+      "field": "user_id",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "PrivateTask",
+      "field": "title",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "PrivateTask",
+      "field": "description",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "PrivateTask",
+      "field": "deadline",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "PrivateTask",
+      "field": "created_at",
+      "type": "DateTime",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "PrivateTask",
+          "field": "created_at"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "PrivateTask",
+          "field": "created_at"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "PrivateTask",
+      "field": "created_by",
+      "type": "User",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "PrivateTask",
+          "field": "created_by"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "PrivateTask",
+          "field": "created_by"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "PrivateTask",
+          "field": "created_by"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Event",
+      "field": "guests",
+      "type": "User_Event",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Event",
+      "field": "joinedEvents"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "event_tasks",
+      "type": "EventTask",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "user_tasks",
+      "type": "PrivateTask",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "EventTask",
+      "field": "created_by",
+      "type": "User",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "EventTask",
+          "field": "created_by"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "EventTask",
+          "field": "created_by"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "EventTask",
+          "field": "created_by"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "EventTask",
+      "field": "createdBy"
+    }
+  ]
+}

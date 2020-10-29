@@ -19,7 +19,7 @@ const createTask = mutationField('createTask', {
             event_id: args.event_id
           }
         },
-        createdBy: {
+        created_by: {
           connect: {
             user_id: user.user_id
           }

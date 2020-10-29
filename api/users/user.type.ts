@@ -9,13 +9,28 @@ const User = objectType({
     t.string('first_name')
     t.string('last_name')
     t.string('email')
-    t.string('role')
     t.list.field('events', {
       type: "Event",
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return await db.user.findOne({ where: { user_id: root.user_id } }).events()
+        return root.events || (await db.user.findOne({ where: { user_id: root.user_id } }).events())
+      }
+    })
+    t.list.field('event_tasks', {
+      type: "EventTask",
+      nullable: false,
+      resolve: async (root, _args, { db }) => {
+        //@ts-ignore
+        return root.event_tasks || (await db.user.findOne({ where: { user_id: root.user_id } }).event_tasks())
+      }
+    })
+    t.list.field('joinedEvents', {
+      type: "Event",
+      nullable: false,
+      resolve: async (root, _args, { db }) => {
+        //@ts-ignore
+        return root.joinedEvents || (await db.user.findOne({ where: { user_id: root.user_id } }).joinedEvents())
       }
     })
   }
