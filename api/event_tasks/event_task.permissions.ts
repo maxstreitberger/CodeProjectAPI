@@ -1,12 +1,12 @@
 import { rules } from '../permissions/rules'
 
 export const EventTaskQueryPermissions = { 
-  allEvents: rules.isAdmin,
-  getEvent: rules.isAuthenticated
+  allTasks: rules.isAdmin,
+  getTask: rules.isAuthenticated
 }
 
 export const EventTaskMutationPermissions = {
-  createEvent: rules.isAuthenticated,
-  updateEvent: rules.isAuthenticated,
-  deleteEvent: rules.isAuthenticated,
+  createEventTask: rules.isAuthenticated,
+  updateEventTask: rules.isAuthenticated,
+  deleteEventTask: rules.isAuthenticated,
 }

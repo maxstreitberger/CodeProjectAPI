@@ -1,6 +1,8 @@
+import { allow } from 'graphql-shield'
 import { rules } from '../permissions/rules'
 
-export const EventQueryPermissions = { 
+export const EventQueryPermissions = {
+  allEvents: allow,
   getEvent: rules.isAuthenticated
 }
 
