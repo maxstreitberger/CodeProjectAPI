@@ -1,6 +1,6 @@
 import { mutationField, stringArg } from "@nexus/schema";
 
-export const GuestMutations = mutationField('joinEvent', {
+const joinEvent = mutationField('joinEvent', {
   type: 'Guest',
   args: {
     event_id: stringArg({ required: true })
@@ -23,3 +23,22 @@ export const GuestMutations = mutationField('joinEvent', {
     })
   }
 })
+
+const leaveEvent = mutationField('leaveEvent', {
+  type: 'Guest',
+  args: {
+    event_id: stringArg({ required: true })
+  },
+  resolve(_root, args, { db, user }) {
+    return db.user_Event.delete({
+      where: {
+        event_id_user_id: {
+          event_id: args.event_id, 
+          user_id: user.user_id
+        }
+      }
+    })
+  }
+})
+
+export const GuestMutations = [joinEvent, leaveEvent]
