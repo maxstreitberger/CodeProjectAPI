@@ -25,6 +25,14 @@ const User = objectType({
         return root.event_tasks || (await db.user.findOne({ where: { user_id: root.user_id } }).event_tasks())
       }
     })
+    t.list.field('private_tasks', {
+      type: "PrivateTask",
+      nullable: false,
+      resolve: async (root, _args, { db }) => {
+        //@ts-ignore
+        return root.private_tasks || (await db.user.findOne({ where: { user_id: root.user_id } }).private_tasks())
+      }
+    })
     t.list.field('joinedEvents', {
       type: "Event",
       nullable: false,

@@ -1,6 +1,6 @@
 import { arg, mutationField, stringArg } from "@nexus/schema"
 
-const createTask = mutationField('createTask', {
+const createEventTask = mutationField('createEventTask', {
   type: 'EventTask',
   args: {
     event_id: stringArg({ required: true }),
@@ -29,10 +29,10 @@ const createTask = mutationField('createTask', {
   }
 })
 
-const updateTask = mutationField('updateTask', {
+const updateEventTask = mutationField('updateEventTask', {
   type: 'EventTask',
   args: {
-    task_id: stringArg({ required: true }),
+    event_task_id: stringArg({ required: true }),
     title: stringArg({ required: false }),
     description: stringArg({ required: false }),
     deadline: stringArg({ required: false })
@@ -40,7 +40,7 @@ const updateTask = mutationField('updateTask', {
   resolve(_root, args, { db }) {
     return db.eventTask.update({
       where: {
-        task_id: args.task_id
+        event_task_id: args.event_task_id
       },
       data: {
         ...args
@@ -49,18 +49,18 @@ const updateTask = mutationField('updateTask', {
   }
 })
 
-const deleteTask = mutationField('deleteTask', {
+const deleteEventTask = mutationField('deleteEventTask', {
   type: 'EventTask',
   args: {
-    task_id: stringArg({ required: true })
+    event_task_id: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
     return db.eventTask.delete({ 
       where: {
-        task_id: args.task_id
+        event_task_id: args.event_task_id
       } 
     })
   }
 })
 
-export const EventTaskMutations = [createTask, updateTask, deleteTask]
+export const EventTaskMutations = [createEventTask, updateEventTask, deleteEventTask]

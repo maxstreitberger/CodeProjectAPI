@@ -4,9 +4,10 @@ import { EventSchema } from './events'
 import { UserSchema } from './users'
 import { GuestSchema } from './guests'
 import { EventTaskSchema } from './event_tasks'
+import { PrivateTaskSchema } from './private_tasks'
 
 export const schema = makeSchema({
-  types: [EventSchema, UserSchema, GuestSchema, EventTaskSchema],
+  types: [EventSchema, UserSchema, GuestSchema, EventTaskSchema, PrivateTaskSchema],
   outputs: {
     typegen: join(__dirname, '/generated/nexus-typegen.ts'),
     schema: join(__dirname, '/generated/schema.graphql'),
