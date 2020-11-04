@@ -1,4 +1,4 @@
-import { rules } from '../permissions/rules'
+import { rules } from '../middleware/permissions/rules'
 
 export const EventTaskQueryPermissions = { 
   allTasks: rules.isAdmin,

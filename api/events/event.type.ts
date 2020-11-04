@@ -9,7 +9,9 @@ import { objectType, scalarType } from '@nexus/schema'
 export const Event = objectType({
   name: 'Event',
   definition(t) {
-    t.string('event_id')
+    t.string('event_id', {
+      complexity: 200
+    }) 
     t.string('title')
     t.string('description')
     t.string('date')
@@ -18,7 +20,6 @@ export const Event = objectType({
       type: 'User',
       nullable: false,
       resolve: async (root, _args, { db }) => {
-        console.log(root)
         //@ts-ignore
         return root.host || (await db.event.findOne({ where: { event_id: root.event_id } }).host())
       }
@@ -27,7 +28,6 @@ export const Event = objectType({
       type: 'EventTask',
       nullable: false,
       resolve: async (root, _args, { db }) => {
-        console.log(root)
         //@ts-ignore
         return root.tasks || (await db.event.findOne({ where: { event_id: root.event_id } }).tasks())
       }
@@ -36,7 +36,6 @@ export const Event = objectType({
       type: 'Guest',
       nullable: false,
       resolve: async (root, _args, { db }) => {
-        console.log(root)
         //@ts-ignore
         return root.guests || (await db.event.findOne({ where: { event_id: root.event_id } }).guests())
       }

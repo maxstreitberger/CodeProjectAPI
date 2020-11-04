@@ -1,0 +1,70 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Friend",
+      "field": "following_user_id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Friend",
+      "field": "friend_id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Friend",
+      "field": "user_id"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Friend",
+      "field": "follower_id"
+    },
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Friend",
+          "field": "following_user"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "newValue": "[following_user_id]"
+    },
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Friend",
+          "field": "friend"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "newValue": "[friend_id]"
+    },
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Model",
+          "model": "Friend"
+        },
+        "directive": "id"
+      },
+      "argument": "",
+      "newValue": "[friend_id, following_user_id]"
+    }
+  ]
+}

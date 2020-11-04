@@ -1,13 +1,21 @@
-import { allow } from 'graphql-shield'
-import { rules } from '../permissions/rules'
+import { rules } from '../middleware/permissions/rules'
+import { createRateLimitRule, RedisStore } from 'graphql-rate-limit';
+import redis from 'redis'
+import { and } from 'graphql-shield';
+
+const createEventRateLimitRule = createRateLimitRule({ 
+  identifyContext: (ctx) => ctx.req.ip, 
+  formatError: () => `Hey there, you are doing way too much`,
+  store: new RedisStore(redis.createClient())
+});
 
 export const EventQueryPermissions = {
-  allEvents: allow,
-  getEvent: rules.isAuthenticated
-}
+  allEvents: rules.isAuthenticated,
+  getEvent: rules.isAuthenticated,
+} 
 
 export const EventMutationPermissions = {
-  createEvent: rules.isAuthenticated,
+  createEvent: and(rules.isAuthenticated, createEventRateLimitRule({ window: "3m", max: 1 })),
   updateEvent: rules.isAuthenticated,
   deleteEvent: rules.isAuthenticated,
 }

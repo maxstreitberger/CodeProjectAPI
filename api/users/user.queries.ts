@@ -1,5 +1,16 @@
 import { queryField, stringArg } from '@nexus/schema'
 
+const me = queryField('me', {
+  type: 'User',
+  nullable: false,
+  resolve(_root, _args, { db, user }) {
+    return db.user.findOne({
+      where: {
+        user_id: user.user_id
+      }
+    })
+  }
+})
 
 const allUsers = queryField('allUsers', {
   type: 'User',
@@ -24,4 +35,4 @@ const getUser = queryField('getUser', {
   }
 })
 
-export const UserQueries = [allUsers, getUser]
+export const UserQueries = [allUsers, getUser, me]
