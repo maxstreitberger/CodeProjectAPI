@@ -15,7 +15,7 @@ export const EventQueryPermissions = {
 } 
 
 export const EventMutationPermissions = {
-  createEvent: and(rules.isAuthenticated, createEventRateLimitRule({ window: "3m", max: 1 })),
+  createEvent: and(rules.isAuthenticated, createEventRateLimitRule({ window: "3m", max: 3 })),
   updateEvent: rules.isAuthenticated,
   deleteEvent: rules.isAuthenticated,
 }

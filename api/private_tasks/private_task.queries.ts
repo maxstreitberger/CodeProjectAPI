@@ -1,4 +1,4 @@
-import { queryField, stringArg } from '@nexus/schema'
+import { idArg, queryField, stringArg } from '@nexus/schema'
 
 const allPrivateTasks = queryField('allPrivateTasks', {
   type: 'PrivateTask',
@@ -12,7 +12,7 @@ const allPrivateTasks = queryField('allPrivateTasks', {
 const getPrivateTask = queryField('getPrivateTask', {
   type: 'PrivateTask',
   args: {
-    private_task_id: stringArg({ required: true })
+    private_task_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
     return db.privateTask.findOne({

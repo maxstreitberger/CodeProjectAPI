@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Event {
@@ -88,21 +88,11 @@ model Friend {
 }
 
 model Survey {
-  survey_id    String         @id @default(cuid())
-  event_id     String?
-  question     String?
-  created_at   DateTime?      @default(now())
-  event        Event?         @relation(fields: [event_id], references: [event_id])
-  answers      SurveyAnswer[]
-}
-
-model SurveyAnswer {
-  answer_id  String    @id @default(cuid())
-  survey_id  String?
-  answer     String?
+  survey_id  String    @id @default(cuid())
+  event_id   String?
+  question   String?
   created_at DateTime? @default(now())
-  likes      Int?      @default(0)
-  survey     Survey?   @relation(fields: [survey_id], references: [survey_id])
+  Event      Event?    @relation(fields: [event_id], references: [event_id])
 }
 
 enum EventType {

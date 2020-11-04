@@ -1,4 +1,4 @@
-import { queryField, stringArg } from '@nexus/schema'
+import { idArg, queryField, stringArg } from '@nexus/schema'
 
 const allEvents = queryField('allEvents', {
   nullable: false,
@@ -13,7 +13,7 @@ const getEvent = queryField('getEvent', {
   nullable: true,
   type: 'Event',
   args: {
-    event_id: stringArg({ required: true })
+    event_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
     return db.event.findOne({

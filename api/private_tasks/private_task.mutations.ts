@@ -1,4 +1,4 @@
-import { mutationField, stringArg } from "@nexus/schema"
+import { idArg, mutationField, stringArg } from "@nexus/schema"
 
 const createPrivateTask = mutationField('createPrivateTask', {
   type: 'PrivateTask',
@@ -26,7 +26,7 @@ const createPrivateTask = mutationField('createPrivateTask', {
 const updatePrivateTask = mutationField('updatePrivateTask', {
   type: 'PrivateTask',
   args: {
-    private_task_id: stringArg({ required: true }),
+    private_task_id: idArg({ required: true }),
     title: stringArg({ required: false }),
     description: stringArg({ required: false }),
     deadline: stringArg({ required: false })
@@ -46,7 +46,7 @@ const updatePrivateTask = mutationField('updatePrivateTask', {
 const deletePrivateTask = mutationField('deletePrivateTask', {
   type: 'PrivateTask',
   args: {
-    private_task_id: stringArg({ required: true })
+    private_task_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
     return db.privateTask.delete({ 

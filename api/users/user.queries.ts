@@ -1,8 +1,7 @@
-import { queryField, stringArg } from '@nexus/schema'
+import { idArg, queryField, stringArg } from '@nexus/schema'
 
 const me = queryField('me', {
   type: 'User',
-  nullable: false,
   resolve(_root, _args, { db, user }) {
     return db.user.findOne({
       where: {
@@ -24,7 +23,7 @@ const allUsers = queryField('allUsers', {
 const getUser = queryField('getUser', {
   type: 'User',
   args: {
-    user_id: stringArg({ required: true })
+    user_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
     return db.user.findOne({

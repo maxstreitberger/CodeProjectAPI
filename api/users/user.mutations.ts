@@ -1,5 +1,5 @@
 require('dotenv').config()
-import { extendType, mutationField, stringArg } from '@nexus/schema'
+import { extendType, idArg, mutationField, stringArg } from '@nexus/schema'
 import { AuthenticationError } from 'apollo-server'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
@@ -81,7 +81,7 @@ const Login = mutationField('login', {
 const UpdateUserData = mutationField('updateUser', {
   type: 'User',
   args: {
-    user_id: stringArg({ required: true }),
+    user_id: idArg({ required: true }),
     first_name: stringArg({ required: false }),
     last_name: stringArg({ required: false })
   },
@@ -105,7 +105,7 @@ const UpdateUserData = mutationField('updateUser', {
 const DeleteUser = mutationField('deleteUser', {
   type: 'User',
   args: {
-    user_id: stringArg({ required: true })
+    user_id: idArg({ required: true })
   },
   resolve (_root, args, { db }) {
     return db.user.delete({ where: { user_id: args.user_id } })

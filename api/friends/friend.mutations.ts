@@ -1,9 +1,9 @@
-import { mutationField, stringArg } from '@nexus/schema'
+import { idArg, mutationField, stringArg } from '@nexus/schema'
 
 const follow = mutationField('follow', {
   type: "Friend",
   args: {
-    friend_id: stringArg({ required: true })
+    friend_id: idArg({ required: true })
   },
   resolve(_root, args, { db, user }) {
     return db.friend.create({
@@ -27,7 +27,7 @@ const follow = mutationField('follow', {
 const unfollow = mutationField('unfollow', {
   type: "Friend",
   args: {
-    friend_id: stringArg({ required: true })
+    friend_id: idArg({ required: true })
   },
   resolve(_root, args, { db, user }) {
     return db.friend.delete({

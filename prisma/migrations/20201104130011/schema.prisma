@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Event {
@@ -97,7 +97,7 @@ model Survey {
 }
 
 model SurveyAnswer {
-  answer_id  String    @id @default(cuid())
+  answer_id  String    @id
   survey_id  String?
   answer     String?
   created_at DateTime? @default(now())

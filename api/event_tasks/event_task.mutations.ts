@@ -1,9 +1,9 @@
-import { arg, mutationField, stringArg } from "@nexus/schema"
+import { idArg, mutationField, stringArg } from "@nexus/schema"
 
 const createEventTask = mutationField('createEventTask', {
   type: 'EventTask',
   args: {
-    event_id: stringArg({ required: true }),
+    event_id: idArg({ required: true }),
     title: stringArg({ required: true }),
     description: stringArg({ required: false }),
     deadline: stringArg({ required: false })
@@ -32,7 +32,7 @@ const createEventTask = mutationField('createEventTask', {
 const updateEventTask = mutationField('updateEventTask', {
   type: 'EventTask',
   args: {
-    event_task_id: stringArg({ required: true }),
+    event_task_id: idArg({ required: true }),
     title: stringArg({ required: false }),
     description: stringArg({ required: false }),
     deadline: stringArg({ required: false })
@@ -52,7 +52,7 @@ const updateEventTask = mutationField('updateEventTask', {
 const deleteEventTask = mutationField('deleteEventTask', {
   type: 'EventTask',
   args: {
-    event_task_id: stringArg({ required: true })
+    event_task_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
     return db.eventTask.delete({ 

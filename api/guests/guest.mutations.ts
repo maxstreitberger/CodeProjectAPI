@@ -1,9 +1,9 @@
-import { mutationField, stringArg } from "@nexus/schema";
+import { idArg, mutationField, stringArg } from "@nexus/schema";
 
 const joinEvent = mutationField('joinEvent', {
   type: 'Guest',
   args: {
-    event_id: stringArg({ required: true })
+    event_id: idArg({ required: true })
   },
   resolve(_root, args, { db, user }) {
     return db.user_Event.create({
@@ -27,7 +27,7 @@ const joinEvent = mutationField('joinEvent', {
 const leaveEvent = mutationField('leaveEvent', {
   type: 'Guest',
   args: {
-    event_id: stringArg({ required: true })
+    event_id: idArg({ required: true })
   },
   resolve(_root, args, { db, user }) {
     return db.user_Event.delete({

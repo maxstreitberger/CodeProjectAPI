@@ -1,4 +1,4 @@
-import { queryField, stringArg } from '@nexus/schema'
+import { idArg, queryField } from '@nexus/schema'
 
 const allEventTasks = queryField('allTasks', {
   type: 'EventTask',
@@ -11,7 +11,7 @@ const allEventTasks = queryField('allTasks', {
 const getEventTask = queryField('getTask', {
   type: 'EventTask',
   args: {
-    event_task_id: stringArg({ required: true })
+    event_task_id: idArg({ required: true })
   },
   list: true,
   resolve(_root, args, { db }) {

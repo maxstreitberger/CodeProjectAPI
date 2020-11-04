@@ -40,5 +40,13 @@ export const Event = objectType({
         return root.guests || (await db.event.findOne({ where: { event_id: root.event_id } }).guests())
       }
     })
+    t.list.field('surveys', {
+      type: 'Survey',
+      nullable: false,
+      resolve: async (root, _args, { db }) => {
+        //@ts-ignore
+        return root.surveys || (await db.event.findOne({ where: { event_id: root.event_id } }).surveys())
+      }
+    })
   }
 })

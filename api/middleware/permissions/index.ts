@@ -5,6 +5,8 @@ import { GuestMutationPermissions, GuestQueryPermissions } from '../../guests/gu
 import { EventTaskMutationPermissions, EventTaskQueryPermissions } from '../../event_tasks/event_task.permissions'
 import { PrivateTaskMutationPermissions, PrivateTaskQueryPermissions } from '../../private_tasks/private_task.permissions'
 import { FriendMutationPermissions, FriendQueryPermissions } from '../../friends/friend.permissions'
+import { SurveyMutationPermissions, SurveyQueryPermissions } from '../../surveys/survey.permissions'
+import { SurveyAnswerMutationPermissions, SurveyAnswerQueryPermissions } from '../../survey_answers/survey_answer.permissions'
 
 export const permissions = shield({
   Query: {
@@ -13,7 +15,9 @@ export const permissions = shield({
     ...GuestQueryPermissions,
     ...EventTaskQueryPermissions,
     ...PrivateTaskQueryPermissions,
-    ...FriendQueryPermissions
+    ...FriendQueryPermissions,
+    ...SurveyQueryPermissions,
+    ...SurveyAnswerQueryPermissions
   },
 
   Mutation: {
@@ -22,7 +26,9 @@ export const permissions = shield({
     ...GuestMutationPermissions,
     ...EventTaskMutationPermissions,
     ...PrivateTaskMutationPermissions,
-    ...FriendMutationPermissions
+    ...FriendMutationPermissions,
+    ...SurveyMutationPermissions,
+    ...SurveyAnswerMutationPermissions
   },
 }, {
   allowExternalErrors: true

@@ -1,0 +1,56 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Survey",
+      "field": "event",
+      "type": "Event",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Survey",
+          "field": "event"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Survey",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Survey",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Survey",
+      "field": "Event"
+    }
+  ]
+}
