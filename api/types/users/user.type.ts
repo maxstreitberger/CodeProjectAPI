@@ -1,5 +1,4 @@
 import { objectType } from '@nexus/schema'
-import { db } from '../db'
 
 const User = objectType({
   name: "User",

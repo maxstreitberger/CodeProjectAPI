@@ -1,6 +1,6 @@
 import { createRateLimitRule, RedisStore } from 'graphql-rate-limit';
 import { allow, and, not } from 'graphql-shield'
-import { rules } from '../middleware/permissions/rules'
+import { rules } from '../../middleware/permissions/rules'
 import redis from 'redis'
 
 const loginRateLimitRule = createRateLimitRule({ 

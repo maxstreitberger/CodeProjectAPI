@@ -1,12 +1,12 @@
 import { shield } from 'graphql-shield'
-import { EventMutationPermissions, EventQueryPermissions } from '../../events/event.permissions'
-import { UserMutationPermissions, UserQueryPermissions } from '../../users/user.permissions'
-import { GuestMutationPermissions, GuestQueryPermissions } from '../../guests/guest.permissions'
-import { EventTaskMutationPermissions, EventTaskQueryPermissions } from '../../event_tasks/event_task.permissions'
-import { PrivateTaskMutationPermissions, PrivateTaskQueryPermissions } from '../../private_tasks/private_task.permissions'
-import { FriendMutationPermissions, FriendQueryPermissions } from '../../friends/friend.permissions'
-import { SurveyMutationPermissions, SurveyQueryPermissions } from '../../surveys/survey.permissions'
-import { SurveyAnswerMutationPermissions, SurveyAnswerQueryPermissions } from '../../survey_answers/survey_answer.permissions'
+import { EventMutationPermissions, EventQueryPermissions } from '../../types/events/event.permissions'
+import { UserMutationPermissions, UserQueryPermissions } from '../../types/users/user.permissions'
+import { GuestMutationPermissions, GuestQueryPermissions } from '../../types/guests/guest.permissions'
+import { EventTaskMutationPermissions, EventTaskQueryPermissions } from '../../types/event_tasks/event_task.permissions'
+import { PrivateTaskMutationPermissions, PrivateTaskQueryPermissions } from '../../types/private_tasks/private_task.permissions'
+import { FriendMutationPermissions, FriendQueryPermissions } from '../../types/friends/friend.permissions'
+import { SurveyMutationPermissions, SurveyQueryPermissions } from '../../types/surveys/survey.permissions'
+import { SurveyAnswerMutationPermissions, SurveyAnswerQueryPermissions } from '../../types/survey_answers/survey_answer.permissions'
 
 export const permissions = shield({
   Query: {
