@@ -8,9 +8,10 @@ import { PrivateTaskSchema } from './private_tasks'
 import { FriendSchema } from './friends'
 import { SurveySchema } from './surveys'
 import { SurveyAnswerSchema } from './survey_answers'
+import { VoteSchema } from './votes'
 
 export const schema = makeSchema({
-  types: [EventSchema, UserSchema, GuestSchema, EventTaskSchema, PrivateTaskSchema, FriendSchema, SurveySchema, SurveyAnswerSchema],
+  types: [EventSchema, UserSchema, GuestSchema, EventTaskSchema, PrivateTaskSchema, FriendSchema, SurveySchema, SurveyAnswerSchema, VoteSchema],
   plugins: [
     queryComplexityPlugin()
   ],

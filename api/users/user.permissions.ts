@@ -16,7 +16,10 @@ const regsiterRateLimitRule = createRateLimitRule({
 });
 
 export const UserQueryPermissions = {
-  allUsers: rules.isAuthenticated
+  allUsers: rules.isAuthenticated,
+  me: rules.isAuthenticated,
+  getUser: rules.isAuthenticated,
+  myVotes: rules.isAuthenticated
 }
 
 export const UserMutationPermissions = {

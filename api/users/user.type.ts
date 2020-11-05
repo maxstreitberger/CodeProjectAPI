@@ -49,6 +49,14 @@ const User = objectType({
         return root.friends || (await db.user.findOne({ where: { user_id: root.user_id } }).friends())
       }
     })
+    t.list.field('votes', {
+      type: "Vote",
+      nullable: false,
+      resolve: async (root, _args, { db }) => {
+        //@ts-ignore
+        return root.votes || (await db.user.findOne({ where: { user_id: root.user_id } }).votes())
+      }
+    })
   }
 })
 

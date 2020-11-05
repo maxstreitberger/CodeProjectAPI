@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Event {
@@ -43,7 +43,6 @@ model User {
   followed_by   Friend[]      @relation("Friend_friend_idToUser")
   private_tasks PrivateTask[]
   joinedEvents  User_Event[]
-  votes         Vote[]
 }
 
 model User_Event {
@@ -105,12 +104,12 @@ model SurveyAnswer {
   created_at DateTime? @default(now())
   likes      Int?      @default(0)
   survey     Survey?   @relation(fields: [survey_id], references: [survey_id])
-  votes      Vote[]    
 }
 
 model Vote {
   user_id     String
   survey_id   String
+  event_id    String
   voted_at    DateTime?       @default(now())
   survey      Survey          @relation(fields: [survey_id], references: [survey_id])
   user        User            @relation(fields: [user_id], references: [user_id])

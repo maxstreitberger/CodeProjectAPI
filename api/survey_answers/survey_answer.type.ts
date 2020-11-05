@@ -5,12 +5,19 @@ export const SurveyAnswer = objectType({
   definition(t) {
     t.string("answer_id")
     t.string("answer")
-    t.int("likes")
     t.field("survey", {
       type: "Survey",
-      resolve: async (root, _args, {db}) => {
+      resolve: async (root, _args, { db }) => {
         //@ts-ignore
         return root.survey || (await db.surveyAnswer.findOne({ where: { answer_id: root.answer_id } }).survey())
+      }
+    })
+    t.field("likes", {
+      type: "Int",
+      resolve: async (root, _args, { db }) => {
+        //@ts-ignore
+        const allVotes = await db.surveyAnswer.findOne({ where: { answer_id: root.answer_id } }).votes()
+        return allVotes.length
       }
     })
   }

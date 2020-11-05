@@ -34,4 +34,17 @@ const getUser = queryField('getUser', {
   }
 })
 
-export const UserQueries = [allUsers, getUser, me]
+const myVotes = queryField('myVotes', {
+  type: "Vote",
+  list: true,
+  nullable: false,
+  resolve(_root, _args, { db, user }) {
+    return db.vote.findMany({
+      where: {
+        user_id: user.user_id
+      }
+    })
+  }
+})
+
+export const UserQueries = [allUsers, getUser, me, myVotes]

@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Event {
@@ -43,7 +43,6 @@ model User {
   followed_by   Friend[]      @relation("Friend_friend_idToUser")
   private_tasks PrivateTask[]
   joinedEvents  User_Event[]
-  votes         Vote[]
 }
 
 model User_Event {
