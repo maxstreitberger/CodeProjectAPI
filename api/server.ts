@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server'
 import { schema } from './schema'
 import { db } from './db'
-import { getUserFromRequest } from './users/helper'
+import { getUserFromRequest } from './types/users/helper'
 import { applyMiddleware } from 'graphql-middleware'
 import { permissions } from './middleware/permissions'
 

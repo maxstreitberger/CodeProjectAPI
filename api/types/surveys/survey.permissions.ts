@@ -1,4 +1,4 @@
-import { rules } from '../middleware/permissions/rules'
+import { rules } from '../../middleware/permissions/rules'
 import { createRateLimitRule, RedisStore } from 'graphql-rate-limit';
 import redis from 'redis'
 import { and } from 'graphql-shield';
