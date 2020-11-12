@@ -1,6 +1,6 @@
 require('dotenv').config()
 import { Request } from "express"
-import jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken'
 const APP_SECRET = process.env.KEY
 
 export const getUserFromRequest = async (req: Request) => {
