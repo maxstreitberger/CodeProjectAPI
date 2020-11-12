@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    depends_on: 
+      - postgres
+      - redis
+    env_file:
+      - .env
+
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+      - ./database/init-schema.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis
+    command: ["redis-server", "--bind", "0.0.0.0", "--port", "6379"]
+    hostname: redis
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379
+
+volumes: 
+  redis_data:
+    name: redis_data
+  postgres:
+    name: project_db

@@ -1,12 +1,12 @@
 import { rules } from '../../middleware/permissions/rules'
 import { createRateLimitRule, RedisStore } from 'graphql-rate-limit';
-import redis from 'redis'
+import * as redis from 'redis'
 import { and } from 'graphql-shield';
 
 const createEventRateLimitRule = createRateLimitRule({ 
   identifyContext: (ctx) => ctx.req.ip, 
   formatError: () => `Hey there, you are doing way too much`,
-  store: new RedisStore(redis.createClient())
+  store: new RedisStore(redis.createClient(6379, 'redis'))
 });
 
 export const EventQueryPermissions = {

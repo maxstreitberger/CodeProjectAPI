@@ -5,7 +5,7 @@ import { createRateLimitRule, RedisStore } from 'graphql-rate-limit';
 export const rateLimitRule = createRateLimitRule({ 
   identifyContext: (ctx) => ctx.req.ip, 
   formatError: () => `Hey there, you are doing way too much`,
-  store: new RedisStore(redis.createClient())
+  store: new RedisStore(redis.createClient(6379, process.env.REDIS_HOST))
 });
 
 // const eventsShield = shield({

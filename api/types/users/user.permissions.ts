@@ -1,18 +1,18 @@
 import { createRateLimitRule, RedisStore } from 'graphql-rate-limit';
 import { allow, and, not } from 'graphql-shield'
 import { rules } from '../../middleware/permissions/rules'
-import redis from 'redis'
+import * as redis from 'redis'
 
 const loginRateLimitRule = createRateLimitRule({ 
   identifyContext: (ctx) => ctx.req.ip, 
   formatError: () => `Hey there, you are doing way too much`,
-  store: new RedisStore(redis.createClient())
+  store: new RedisStore(redis.createClient(6379, 'redis'))
 });
 
 const regsiterRateLimitRule = createRateLimitRule({ 
   identifyContext: (ctx) => ctx.req.ip, 
   formatError: () => `Hey there, you are doing way too much`,
-  store: new RedisStore(redis.createClient())
+  store: new RedisStore(redis.createClient(6379, 'redis'))
 });
 
 export const UserQueryPermissions = {
