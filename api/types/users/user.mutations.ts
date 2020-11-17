@@ -1,8 +1,11 @@
 require('dotenv').config()
-import { extendType, idArg, mutationField, stringArg } from '@nexus/schema'
+import { idArg, mutationField, stringArg } from '@nexus/schema'
 import { AuthenticationError } from 'apollo-server'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
+import * as redis from 'redis'
+import { sendEmail } from '../../utils/sendEmail'
+import { createConfirmEmailLink } from './helper'
 const APP_SECRET = process.env.KEY
 
 const Register = mutationField('register', {
@@ -15,6 +18,13 @@ const Register = mutationField('register', {
     password: stringArg({ required: true }),
   },
   async resolve(_root, args, ctx) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    console.log("Is this a valid email? " + re.test(args.email.toLowerCase()))
+    if (!re.test(args.email.toLowerCase())) {
+      const error = new Error("This is not a valid email address. Please try a different one.")
+      return error
+    }
+
     try {
       const password = await bcrypt.hash(args.password, 10)
       const user = await ctx.db.user.create({
@@ -29,14 +39,19 @@ const Register = mutationField('register', {
       })
 
       const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email, role: user.role }, APP_SECRET!, {expiresIn: 2419200})
-      
+
+      const url = ctx.req.protocol + "://" + ctx.req.hostname + ':4000'
+      const link = await createConfirmEmailLink(url, user.user_id)
+
+      await sendEmail(user.email!, link);
+
       return {
         user: user,
         token: token
       }
     } catch(e) {
       console.log(e)
-      return null
+      return e
     }
   }
 })
@@ -54,9 +69,13 @@ const Login = mutationField('login', {
           email: args.email
         }
       })
-    
+
       if (!user) {
         throw new AuthenticationError('User does not exist')
+      }
+
+      if (!user.confirmed) {
+        throw new AuthenticationError('Account is not confirmed yet')
       }
     
       const valid = await bcrypt.compare(args.password, user.password!)
@@ -66,14 +85,14 @@ const Login = mutationField('login', {
       }
     
       const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email, role: user.role }, APP_SECRET!, {expiresIn: 2419200})
-    
+
       return {
         user,
         token
       }
     } catch(e) {
       console.log(e)
-      return null
+      return e
     }
   }
 })
@@ -107,8 +126,22 @@ const DeleteUser = mutationField('deleteUser', {
   args: {
     user_id: idArg({ required: true })
   },
-  resolve (_root, args, { db }) {
+  resolve(_root, args, { db }) {
     return db.user.delete({ where: { user_id: args.user_id } })
+  }
+})
+
+const VerifyCode = mutationField('verifyCode', {
+  type: 'Boolean',
+  args: {
+    code: stringArg({ required: true })
+  },
+  resolve(_root, args, { db, user }) {
+    const redisClient = redis.createClient(6379, process.env.REDIS_HOST)
+    redisClient.get(args.code, function(err, res) {
+      console.log(res)
+    })
+    return true
   }
 })
 
@@ -116,5 +149,6 @@ export const UserMutations = [
   Register,
   Login,
   UpdateUserData,
-  DeleteUser
+  DeleteUser,
+  VerifyCode
 ]

@@ -6,7 +6,7 @@ import { and } from 'graphql-shield';
 const followRateLimitRule = createRateLimitRule({ 
   identifyContext: (ctx) => ctx.req.ip, 
   formatError: () => `Hey there, you are doing way too much`,
-  store: new RedisStore(redis.createClient(6379, 'redis'))
+  store: new RedisStore(redis.createClient(6379, process.env.REDIS_HOST))
 });
 
 export const FriendQueryPermissions = {

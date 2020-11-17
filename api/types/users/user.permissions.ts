@@ -6,13 +6,13 @@ import * as redis from 'redis'
 const loginRateLimitRule = createRateLimitRule({ 
   identifyContext: (ctx) => ctx.req.ip, 
   formatError: () => `Hey there, you are doing way too much`,
-  store: new RedisStore(redis.createClient(6379, 'redis'))
+  store: new RedisStore(redis.createClient(6379, process.env.REDIS_HOST))
 });
 
 const regsiterRateLimitRule = createRateLimitRule({ 
   identifyContext: (ctx) => ctx.req.ip, 
   formatError: () => `Hey there, you are doing way too much`,
-  store: new RedisStore(redis.createClient(6379, 'redis'))
+  store: new RedisStore(redis.createClient(6379, process.env.REDIS_HOST))
 });
 
 export const UserQueryPermissions = {
@@ -23,8 +23,8 @@ export const UserQueryPermissions = {
 }
 
 export const UserMutationPermissions = {
-  login: and(not(rules.isAuthenticated), loginRateLimitRule({ window: "1m", max: 2 })),
-  register: and(not(rules.isAuthenticated), regsiterRateLimitRule({ window: "5m", max: 5 })),
+  login: and(not(rules.isAuthenticated), loginRateLimitRule({ window: "1m", max: 10 })),
+  register: and(not(rules.isAuthenticated), regsiterRateLimitRule({ window: "5m", max: 50 })),
   updateUser: rules.isAuthenticated,
   deleteUser: rules.isAuthenticated
 }

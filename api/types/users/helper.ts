@@ -1,9 +1,11 @@
 require('dotenv').config()
 import { Request } from "express"
 import * as jwt from 'jsonwebtoken'
+import * as redis from 'redis'
+import { v4 } from 'uuid'
 const APP_SECRET = process.env.KEY
 
-export const getUserFromRequest = async (req: Request) => {
+export const getUserFromRequest = async(req: Request) => {
   let authToken = ''
   const header = req.get('Authentication')
   if (header) {
@@ -26,4 +28,11 @@ export const getUserFromRequest = async (req: Request) => {
   }
 
   return undefined
+}
+
+export const createConfirmEmailLink = async(url: string, user_id: string) => {
+  const token = v4()
+  const redisClient = redis.createClient(6379, process.env.REDIS_HOST)
+  redisClient.set(token, user_id, 'ex', 60 * 10)
+  return `${url}/confirm/${token}`;
 }

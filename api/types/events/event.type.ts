@@ -9,9 +9,7 @@ import { objectType, scalarType } from '@nexus/schema'
 export const Event = objectType({
   name: 'Event',
   definition(t) {
-    t.string('event_id', {
-      complexity: 200
-    }) 
+    t.string('event_id') 
     t.string('title')
     t.string('description')
     t.string('date')
