@@ -63,3 +63,6 @@ This command reads your Prisma schema and generates your Prisma Client library i
 - Apollo Express Server
 - PostgreSQL
 - Redis
+
+## Backend architecture diagram
+![Backend](https://user-images.githubusercontent.com/27073329/99408050-1389eb80-28f0-11eb-836e-dc4bc80efb53.jpg)
