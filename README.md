@@ -4,7 +4,7 @@
 My idea is to build a website for managing events and parties. Users can create private or public events/parties and they can invite some guests to it. While they create the event/party they have to provide some necessary information like a title and when and where the event/party is taking place. The guests will also be able to take part in surveys and are allowed to participate in tasks.
 
 **API Descrition** \
-I build a GraphQL API on top of an Apollo Express Server. As an object-relational mapper (ORM), I use Prisma, which connects to a PostgreSQL database. Because a normal GraphQL resolver is a schema-first approach, which means you first create your schema and then you code the resolver. I decided to use NexusJS which lets you code the resolvers first and then, from code as a single source of truth, we have the schema generated. I also use Redis for tracking IPs to rate limiting some resolvers and to manage email confirmation tokens.
+I built a GraphQL API on top of an Apollo Express Server. As an object-relational mapper (ORM), I use Prisma, which connects to a PostgreSQL database. Because a normal GraphQL resolver is a schema-first approach, which means you first create your schema and then you code the resolver. I decided to use NexusJS which lets you code the resolvers first and then, from code as a single source of truth, we have the schema generated. I also use Redis for tracking IPs to rate limiting some resolvers and to manage email confirmation tokens.
 
 **Front-end:** [VueJS app](https://github.com/maxstreitberger/CodeProject)
 
