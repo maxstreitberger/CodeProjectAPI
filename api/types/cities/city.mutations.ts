@@ -14,4 +14,18 @@ const createCity = mutationField('createCity', {
   }
 })
 
-export const CityMutations = [createCity]
+const deleteCity = mutationField('deleteCity', {
+  type: 'City',
+  args: {
+    name: stringArg({ required: true })
+  },
+  resolve(_root, args, { db }) {
+    return db.city.delete({
+      where: {
+        name: args.name
+      }
+    })
+  }
+})
+
+export const CityMutations = [createCity, deleteCity]

@@ -7,6 +7,7 @@ import { PrivateTaskMutationPermissions, PrivateTaskQueryPermissions } from '../
 import { FriendMutationPermissions, FriendQueryPermissions } from '../../types/friends/friend.permissions'
 import { SurveyMutationPermissions, SurveyQueryPermissions } from '../../types/surveys/survey.permissions'
 import { SurveyAnswerMutationPermissions, SurveyAnswerQueryPermissions } from '../../types/survey_answers/survey_answer.permissions'
+import { CityMutationPermissions, CityQueryPermissions } from '../../types/cities/city.permissions'
 
 export const permissions = shield({
   Query: {
@@ -17,7 +18,8 @@ export const permissions = shield({
     ...PrivateTaskQueryPermissions,
     ...FriendQueryPermissions,
     ...SurveyQueryPermissions,
-    ...SurveyAnswerQueryPermissions
+    ...SurveyAnswerQueryPermissions,
+    ...CityQueryPermissions
   },
 
   Mutation: {
@@ -28,7 +30,8 @@ export const permissions = shield({
     ...PrivateTaskMutationPermissions,
     ...FriendMutationPermissions,
     ...SurveyMutationPermissions,
-    ...SurveyAnswerMutationPermissions
+    ...SurveyAnswerMutationPermissions,
+    ...CityMutationPermissions
   },
 }, {
   allowExternalErrors: true
