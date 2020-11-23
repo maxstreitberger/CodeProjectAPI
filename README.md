@@ -31,6 +31,9 @@ To run the API, you just use this command: \
 
 Before you can run the API, you should also replace the two `.env-sample` files with `.env` files. Also, you have to make sure that your postgres database and redis are running and that you have migrated the `schema.prisma` file with the database.
 
+**URL:**`http://localhost:4000/graphql`
+
+
 ## Database
 ### Relational database model
 ![CODE project](https://user-images.githubusercontent.com/27073329/99972301-a4544180-2d9e-11eb-8736-ebd6eba503d2.jpg)
