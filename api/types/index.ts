@@ -7,6 +7,8 @@ import { FriendSchema } from './friends'
 import { SurveySchema } from './surveys'
 import { SurveyAnswerSchema } from './survey_answers'
 import { VoteSchema } from './votes'
+import { CitySchema } from './citys'
+import { CountrySchema } from './countrys'
 
 export const types = [
   EventSchema,
@@ -17,5 +19,7 @@ export const types = [
   FriendSchema,
   SurveySchema,
   SurveyAnswerSchema,
-  VoteSchema
+  VoteSchema,
+  CitySchema,
+  CountrySchema
 ]

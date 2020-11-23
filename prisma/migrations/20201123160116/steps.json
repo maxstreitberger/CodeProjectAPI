@@ -131,7 +131,60 @@
     {
       "tag": "CreateField",
       "model": "Event",
+      "field": "city_id",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Event",
       "field": "city",
+      "type": "City",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Event",
+          "field": "city"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Event",
+          "field": "city"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[city_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Event",
+          "field": "city"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[name]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Event",
+      "field": "country_id",
       "type": "String",
       "arity": "Optional"
     },
@@ -139,8 +192,47 @@
       "tag": "CreateField",
       "model": "Event",
       "field": "country",
-      "type": "String",
+      "type": "Country",
       "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Event",
+          "field": "country"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Event",
+          "field": "country"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[country_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Event",
+          "field": "country"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[name]"
     },
     {
       "tag": "CreateField",
@@ -1893,6 +1985,128 @@
       },
       "argument": "",
       "value": "[survey_id, user_id]"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "City"
+    },
+    {
+      "tag": "CreateField",
+      "model": "City",
+      "field": "name",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "City",
+          "field": "name"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "City",
+      "field": "created_at",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "City",
+          "field": "created_at"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "City",
+          "field": "created_at"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "City",
+      "field": "events",
+      "type": "Event",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "Country"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Country",
+      "field": "name",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Country",
+          "field": "name"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "Country",
+      "field": "created_at",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Country",
+          "field": "created_at"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Country",
+          "field": "created_at"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Country",
+      "field": "events",
+      "type": "Event",
+      "arity": "List"
     }
   ]
 }

@@ -16,8 +16,12 @@ model Event {
   is_public               Boolean
   event_type              EventType
   street_and_house_number String?
-  city                    String?
-  country                 String?
+  city_id                 String?
+  city                    City?        @relation(fields: [city_id], references: [name])
+  // city                    String?
+  country_id              String?
+  country                 Country?     @relation(fields: [country_id], references: [name])
+  // country                 String?
   meeting_link            String?
   created_at              DateTime?    @default(now())
   host_id                 String
@@ -123,6 +127,18 @@ model Vote {
   user      User         @relation(fields: [user_id], references: [user_id])
 
   @@id([survey_id, user_id])
+}
+
+model City {
+  name        String      @id
+  created_at  DateTime    @default(now())
+  events      Event[]
+}
+
+model Country {
+  name        String      @id
+  created_at  DateTime    @default(now())
+  events      Event[]
 }
 
 enum EventType {

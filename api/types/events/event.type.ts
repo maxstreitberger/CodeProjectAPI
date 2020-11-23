@@ -16,8 +16,6 @@ export const Event = objectType({
     t.string('street_and_house_number')
     t.string('zip') 
     t.date('date')
-    t.string('city') 
-    t.string('country') 
     t.string('meeting_link')
     t.string('event_type')
     t.boolean('is_public')
@@ -52,6 +50,22 @@ export const Event = objectType({
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
         return root.surveys || (await db.event.findOne({ where: { event_id: root.event_id } }).surveys())
+      }
+    })
+    t.field('city', {
+      type: 'City',
+      nullable: false,
+      resolve: async (root, _args, { db }) => {
+        //@ts-ignore
+        return root.city || (await db.event.findOne({ where: { event_id: root.event_id } }).city())
+      }
+    })
+    t.field('country', {
+      type: 'Country',
+      nullable: false,
+      resolve: async (root, _args, { db }) => {
+        //@ts-ignore
+        return root.country || (await db.event.findOne({ where: { event_id: root.event_id } }).country())
       }
     })
   }

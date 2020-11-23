@@ -1,6 +1,5 @@
 import { booleanArg, idArg, mutationField, stringArg } from '@nexus/schema'
 import { EventType } from '@prisma/client'
-import { DateTime, Time } from 'graphql-scalars/mocks'
 
 const createEvent = mutationField('createEvent', {
   type: 'Event',
@@ -14,8 +13,8 @@ const createEvent = mutationField('createEvent', {
     description: stringArg({ required: false }),
     street_and_house_number: stringArg({ required: false }),
     zip: stringArg({ required: false }),
-    city: stringArg({ required: false }),
-    country: stringArg({ required: false }),
+    city: stringArg({ required: true }),
+    country: stringArg({ required: true }),
     link: stringArg({ required: false })
   },
   resolve(_root, args, ctx) {
@@ -27,8 +26,16 @@ const createEvent = mutationField('createEvent', {
         description: args.description,
         street_and_house_number: args.street_and_house_number,
         zip: args.zip,
-        city: args.city,
-        country: args.country,
+        city: {
+          connect: {
+            name: args.city
+          }
+        },
+        country: {
+          connect: {
+            name: args.country
+          }
+        },
         meeting_link: args.link,
         event_type: args.event_type as EventType,
         is_public: args.is_public,
