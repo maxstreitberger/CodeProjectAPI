@@ -7,7 +7,7 @@ const APP_SECRET = process.env.KEY
 
 export const getUserFromRequest = async(req: Request) => {
   let authToken = ''
-  const header = req.get('Authentication')
+  const header = req.get('authorization')
   if (header) {
     const authHeader = header
     authToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader

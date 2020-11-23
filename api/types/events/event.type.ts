@@ -12,8 +12,16 @@ export const Event = objectType({
     t.string('event_id') 
     t.string('title')
     t.string('description')
-    t.string('date')
     t.string('event_start')
+    t.string('street_and_house_number')
+    t.string('zip') 
+    t.date('date')
+    t.string('city') 
+    t.string('country') 
+    t.string('meeting_link')
+    t.string('event_type')
+    t.boolean('is_public')
+    t.string('event_color')
     t.field('host', {
       type: 'User',
       nullable: false,

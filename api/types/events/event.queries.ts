@@ -1,16 +1,24 @@
-import { idArg, queryField, stringArg } from '@nexus/schema'
+import { idArg, intArg, queryField, stringArg } from '@nexus/schema'
 
 const allEvents = queryField('allEvents', {
   nullable: false,
   list: true,
   type: 'Event',
-  resolve(_root, _args, { db }) {
-    return db.event.findMany()
+  args: {
+    take: intArg({ required: true }),
+    skip: intArg({ required: false }),
+  },
+  resolve(_root, args, { db }) {
+    let takeLimit: number = args.take > 50 ? 50 : args.take
+    let skipLimit: number = args.skip ? args.skip :  0
+    return db.event.findMany({
+      take: takeLimit,
+      skip: skipLimit
+    })
   }
 })
 
 const getEvent = queryField('getEvent', {
-  nullable: true,
   type: 'Event',
   args: {
     event_id: idArg({ required: true })
@@ -22,4 +30,30 @@ const getEvent = queryField('getEvent', {
   }
 })
 
-export const EventQueries = [allEvents, getEvent]
+const myEvents = queryField('myEvents', {
+  type: 'Event',
+  list: true,
+  nullable: true,
+  args: {
+    take: intArg({ required: true }),
+    skip: intArg({ required: false }),
+  },
+  resolve(_root, args, { db, user }) {
+    let takeLimit: number = args.take > 50 ? 50 : args.take
+    let skipLimit: number = args.skip ? args.skip :  0
+    return db.event.findMany({
+      take: takeLimit,
+      skip: skipLimit,
+      where: {
+        host: {
+          user_id: user.user_id
+        }
+      },
+      orderBy: {
+        date: "desc"
+      }
+    })
+  }
+})
+
+export const EventQueries = [allEvents, getEvent, myEvents]

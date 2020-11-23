@@ -8,6 +8,7 @@ const User = objectType({
     t.string('first_name')
     t.string('last_name')
     t.string('email')
+    t.string('profile_color')
     t.list.field('events', {
       type: "Event",
       nullable: false,

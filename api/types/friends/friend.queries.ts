@@ -8,4 +8,16 @@ const allFriends = queryField('allFriends', {
   }
 })
 
-export const FriendQueries = [allFriends]
+const myFriends = queryField('myFriends', {
+  type: "Friend",
+  list: true,
+  resolve(_root, _args, { db, user }) {
+    return db.friend.findMany({
+      where: {
+        following_user_id: user.user_id
+      }
+    })
+  }
+})
+
+export const FriendQueries = [allFriends, myFriends]

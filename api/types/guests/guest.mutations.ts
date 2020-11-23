@@ -1,43 +1,55 @@
 import { idArg, mutationField, stringArg } from "@nexus/schema";
 
 const joinEvent = mutationField('joinEvent', {
-  type: 'Guest',
+  type: 'Boolean',
   args: {
     event_id: idArg({ required: true })
   },
-  resolve(_root, args, { db, user }) {
-    return db.user_Event.create({
-      data: {
-        event: {
-          connect: {            
-            event_id: args.event_id
-          }
-        },
-
-        user: {
-          connect: {
-            user_id: user.user_id
+  resolve: async (_root, args, { db, user }) => {
+    try {
+      await db.user_Event.create({
+        data: {
+          event: {
+            connect: {            
+              event_id: args.event_id
+            }
+          },
+  
+          user: {
+            connect: {
+              user_id: user.user_id
+            }
           }
         }
-      }
-    })
+      })
+      return true
+    } catch(err) {
+      console.log(err)
+      return false
+    }
   }
 })
 
 const leaveEvent = mutationField('leaveEvent', {
-  type: 'Guest',
+  type: 'Boolean',
   args: {
     event_id: idArg({ required: true })
   },
-  resolve(_root, args, { db, user }) {
-    return db.user_Event.delete({
-      where: {
-        event_id_user_id: {
-          event_id: args.event_id, 
-          user_id: user.user_id
+  resolve: async (_root, args, { db, user }) => {
+    try {
+      await db.user_Event.delete({
+        where: {
+          event_id_user_id: {
+            event_id: args.event_id, 
+            user_id: user.user_id
+          }
         }
-      }
-    })
+      })
+      return true
+    } catch(err) {
+      console.log(err)
+      return false
+    }
   }
 })
 

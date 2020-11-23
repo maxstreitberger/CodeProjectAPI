@@ -1,13 +1,18 @@
-// import { decorateType } from '@nexus/schema'
-// import { GraphQLDate } from 'graphql-scalars'
+import { decorateType } from '@nexus/schema'
+import { GraphQLDate } from 'graphql-scalars'
 
-// export const GQLDate = decorateType(GraphQLDate, {
-//   rootTyping: 'Date',
-//   asNexusMethod: 'date',
+const GQLDate = decorateType(GraphQLDate, {
+  rootTyping: 'DateTime',
+  asNexusMethod: 'date',
+})
+
+// const GQLTime = decorateType(GraphQLTime, {
+//   rootTyping: 'DateTime',
+//   asNexusMethod: 'time',
 // })
 
 import { Event } from './event.type'
 import { EventQueries } from './event.queries'
 import { EventMutations } from './event.mutations'
 
-export const EventSchema = [Event, EventQueries, EventMutations]
+export const EventSchema = [GQLDate, Event, EventQueries, EventMutations]
