@@ -1,20 +1,21 @@
 import nodemailer from 'nodemailer';
+require('dotenv').config()
 
 export async function sendEmail(email: string, url: string) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: '***REMOVED***',
-        pass: 'bitfox-fuhZaz-tutco3'
+        user: process.env.GM_USER,
+        pass: process.env.GM_PASSWORD
     }
   })
 
   const mailOptions = {
-    from: '"Max Streitberger" <***REMOVED***>',
+    from: `"Code Project API" <${process.env.GM_USER}`,
     to: email,
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: `<a href="${url}">${url}</a>` // html body
+    subject: "Hello ✔",
+    text: "Hello world?", 
+    html: `<a href="${url}">${url}</a>`
   }
 
   const info = await transporter.sendMail(mailOptions)
