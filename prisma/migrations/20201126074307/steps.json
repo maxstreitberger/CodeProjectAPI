@@ -1,0 +1,35 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "UpdateField",
+      "model": "Event",
+      "field": "title",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Event",
+      "field": "event_start",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Event",
+      "field": "is_public",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Event",
+      "field": "event_type",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Event",
+      "field": "date",
+      "arity": "Optional"
+    }
+  ]
+}

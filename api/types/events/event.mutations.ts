@@ -1,21 +1,19 @@
 import { booleanArg, idArg, mutationField, stringArg } from '@nexus/schema'
 import { EventType } from '@prisma/client'
 
-const createEvent = mutationField('createEvent', {
+const createLocalEvent = mutationField('createLocalEvent', {
   type: 'Event',
   args: {
     title: stringArg({ required: true }),
     date: stringArg({ required: true }),
     event_start: stringArg({ required: true }),
-    event_type: stringArg({ required: true }),
     is_public: booleanArg({ required: true }),
-
-    description: stringArg({ required: false }),
-    street_and_house_number: stringArg({ required: false }),
-    zip: stringArg({ required: false }),
+    street_and_house_number: stringArg({ required: true }),
+    zip: stringArg({ required: true }),
     city: stringArg({ required: true }),
     country: stringArg({ required: true }),
-    link: stringArg({ required: false })
+
+    description: stringArg({ required: false })
   },
   resolve(_root, args, ctx) {
     return ctx.db.event.create({
@@ -36,8 +34,7 @@ const createEvent = mutationField('createEvent', {
             name: args.country
           }
         },
-        meeting_link: args.link,
-        event_type: args.event_type as EventType,
+        event_type: EventType.LOCAL,
         is_public: args.is_public,
         host: {
           connect: {
@@ -49,14 +46,52 @@ const createEvent = mutationField('createEvent', {
   }
 })
 
-const updateEvent = mutationField('updateEvent', {
+const createOnlineEvent = mutationField('createOnlineEvent', {
+  type: 'Event',
+  args: {
+    title: stringArg({ required: true }),
+    date: stringArg({ required: true }),
+    event_start: stringArg({ required: true }),
+    is_public: booleanArg({ required: true }),
+    link: stringArg({ required: true }),
+
+    description: stringArg({ required: false })
+  },
+  resolve(_root, args, ctx) {
+    return ctx.db.event.create({
+      data: {
+        title: args.title,
+        date: new Date(args.date),
+        event_start: args.event_start,
+        description: args.description,
+        meeting_link: args.link,
+        event_type: EventType.ONLINE,
+        is_public: args.is_public,
+        host: {
+          connect: {
+            user_id: ctx.user.user_id
+          }
+        }
+      }
+    })
+  }
+})
+
+const updateLocalEvent = mutationField('updateLocalEvent', {
   type: 'Event',
   args: {
     event_id: idArg({ required: true }),
-    title: stringArg({ required: true }),
-    description: stringArg({ required: false }),
-    date: stringArg({ required: true }),
-    event_start: stringArg({ required: true })
+    title: stringArg({ required: false }),
+    date: stringArg({ required: false }),
+    event_start: stringArg({ required: false }),
+    event_type: stringArg({ required: false }),
+    is_public: booleanArg({ required: false }),
+    street_and_house_number: stringArg({ required: false }),
+    zip: stringArg({ required: false }),
+    city: stringArg({ required: true }),
+    country: stringArg({ required: true }),
+
+    description: stringArg({ required: false })
   },
   resolve(_root, args, ctx) {
     return ctx.db.event.update({
@@ -64,7 +99,44 @@ const updateEvent = mutationField('updateEvent', {
         event_id: args.event_id
       },
       data: {
-        ...args
+        ...args,
+        event_type: args.event_type as EventType,
+        city: {
+          connect: {
+            name: args.city
+          }
+        },
+        country: {
+          connect: {
+            name: args.country
+          }
+        }
+      }
+    })
+  }
+})
+
+const updateOnlineEvent = mutationField('updateOnlineEvent', {
+  type: 'Event',
+  args: {
+    event_id: idArg({ required: true }),
+    title: stringArg({ required: false }),
+    date: stringArg({ required: false }),
+    event_start: stringArg({ required: false }),
+    event_type: stringArg({ required: false }),
+    is_public: booleanArg({ required: false }),
+    link: stringArg({ required: false }),
+
+    description: stringArg({ required: false })
+  },
+  resolve(_root, args, ctx) {
+    return ctx.db.event.update({
+      where: {
+        event_id: args.event_id
+      },
+      data: {
+        ...args,
+        event_type: args.event_type as EventType,
       }
     })
   }
@@ -79,9 +151,13 @@ const deleteEvent = mutationField('deleteEvent', {
     return ctx.db.event.delete({
       where: {
         event_id: args.event_id
+      },
+      include: {
+        city: {},
+        country: {},
       }
     })
   }
 })
 
-export const EventMutations = [createEvent, updateEvent, deleteEvent]
+export const EventMutations = [createLocalEvent, createOnlineEvent, updateLocalEvent, updateOnlineEvent, deleteEvent]
