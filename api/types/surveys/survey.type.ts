@@ -9,7 +9,7 @@ export const Survey = objectType({
       type: "Event",
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.event || (await db.survey.findOne({ where: { survey_id: root.survey_id } }).event())
+        return root.event || (await db.surveys.findOne({ where: { survey_id: root.survey_id } }).event())
       }
     })
     t.field("answers", {
@@ -17,7 +17,7 @@ export const Survey = objectType({
       list: true,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.answers || (await db.survey.findOne({ where: { survey_id: root.survey_id } }).answers())
+        return root.answers || (await db.surveys.findOne({ where: { survey_id: root.survey_id } }).answers())
       }
     })
   }

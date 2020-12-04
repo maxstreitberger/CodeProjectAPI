@@ -1,0 +1,135 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "friends",
+      "field": "following_user",
+      "type": "users",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "friends",
+          "field": "following_user"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "friends",
+          "field": "following_user"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"friends_following_user_idTousers\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "friends",
+          "field": "following_user"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[following_user_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "friends",
+          "field": "following_user"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "friends",
+      "field": "friend",
+      "type": "users",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "friends",
+          "field": "friend"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "friends",
+          "field": "friend"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"friends_friend_idTousers\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "friends",
+          "field": "friend"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[friend_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "friends",
+          "field": "friend"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "friends",
+      "field": "users_friends_following_user_idTousers"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "friends",
+      "field": "users_friends_friend_idTousers"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import express from 'express';
+// import helmet from 'helmet';
 import { ApolloServer } from 'apollo-server-express'
 import { schema } from './schema'
 import { db } from './db'
@@ -10,11 +11,8 @@ import { PrismaClient } from '@prisma/client';
 
 const permissionsSchema = applyMiddleware(schema, permissions)
 
-const server = new ApolloServer({ 
+export const server = new ApolloServer({ 
   schema: permissionsSchema,
-  engine: {
-    apiKey: process.env.APOLLO_KEY
-  },
   context: async ({ req }) => {
     const user = await getUserFromRequest(req)
     return {
@@ -25,9 +23,14 @@ const server = new ApolloServer({
   }
 })
 
+
 export const app = express();
 
+app.use(require('express-status-monitor')());
+
 const prismaClient = new PrismaClient()
+
+// app.use(helmet())
 
 app.get('/confirm/:token', async (req, res) => {
   const redisClient = redis.createClient(6379, process.env.REDIS_HOST)

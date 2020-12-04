@@ -9,12 +9,13 @@ const User = objectType({
     t.string('last_name')
     t.string('email')
     t.string('profile_color')
+    t.boolean('is_private')
     t.list.field('events', {
       type: "Event",
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.events || (await db.user.findOne({ where: { user_id: root.user_id } }).events())
+        return root.events || (await db.users.findOne({ where: { user_id: root.user_id } }).events())
       }
     })
     t.list.field('event_tasks', {
@@ -22,7 +23,7 @@ const User = objectType({
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.event_tasks || (await db.user.findOne({ where: { user_id: root.user_id } }).event_tasks())
+        return root.event_tasks || (await db.users.findOne({ where: { user_id: root.user_id } }).event_tasks())
       }
     })
     t.list.field('private_tasks', {
@@ -30,15 +31,15 @@ const User = objectType({
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.private_tasks || (await db.user.findOne({ where: { user_id: root.user_id } }).private_tasks())
+        return root.private_tasks || (await db.users.findOne({ where: { user_id: root.user_id } }).private_tasks())
       }
     })
-    t.list.field('joinedEvents', {
-      type: "Event",
+    t.list.field('joined_events', {
+      type: "JoinedEvent",
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.joinedEvents || (await db.user.findOne({ where: { user_id: root.user_id } }).joinedEvents())
+        return root.joined_events || (await db.users.findOne({ where: { user_id: root.user_id } }).joined_events())
       }
     })
     t.list.field('friends', {
@@ -46,7 +47,7 @@ const User = objectType({
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.friends || (await db.user.findOne({ where: { user_id: root.user_id } }).friends())
+        return root.friends || (await db.users.findOne({ where: { user_id: root.user_id } }).friends())
       }
     })
     t.list.field('votes', {
@@ -54,7 +55,7 @@ const User = objectType({
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.votes || (await db.user.findOne({ where: { user_id: root.user_id } }).votes())
+        return root.votes || (await db.users.findOne({ where: { user_id: root.user_id } }).votes())
       }
     })
   }

@@ -11,9 +11,30 @@ const allEvents = queryField('allEvents', {
   resolve(_root, args, { db }) {
     let takeLimit: number = args.take > 50 ? 50 : args.take
     let skipLimit: number = args.skip ? args.skip :  0
-    return db.event.findMany({
+    return db.events.findMany({
       take: takeLimit,
       skip: skipLimit
+    })
+  }
+})
+
+const allPublicEvents = queryField('publicEvents', {
+  nullable: false,
+  list: true,
+  type: 'Event',
+  args: {
+    take: intArg({ required: true }),
+    skip: intArg({ required: false }),
+  },
+  resolve(_root, args, { db }) {
+    let takeLimit: number = args.take > 50 ? 50 : args.take
+    let skipLimit: number = args.skip ? args.skip :  0
+    return db.events.findMany({
+      take: takeLimit,
+      skip: skipLimit,
+      where: {
+        is_public: true
+      }
     })
   }
 })
@@ -24,7 +45,7 @@ const getEvent = queryField('getEvent', {
     event_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.event.findOne({
+    return db.events.findOne({
       where: { event_id: args.event_id }
     })
   }
@@ -41,7 +62,7 @@ const myEvents = queryField('myEvents', {
   resolve(_root, args, { db, user }) {
     let takeLimit: number = args.take > 50 ? 50 : args.take
     let skipLimit: number = args.skip ? args.skip :  0
-    return db.event.findMany({
+    return db.events.findMany({
       take: takeLimit,
       skip: skipLimit,
       where: {
@@ -56,4 +77,4 @@ const myEvents = queryField('myEvents', {
   }
 })
 
-export const EventQueries = [allEvents, getEvent, myEvents]
+export const EventQueries = [allEvents, allPublicEvents, getEvent, myEvents]

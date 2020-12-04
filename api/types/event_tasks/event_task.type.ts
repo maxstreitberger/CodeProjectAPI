@@ -6,13 +6,14 @@ export const EventTask = objectType({
     t.string('event_task_id')
     t.string('title')
     t.string('description')
-    t.string('deadline')
+    t.date('deadline')
+    t.boolean('done'),
     t.field('event', {
       type: 'Event',
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.event || (await db.eventTask.findOne({ where: { event_task_id: root.event_task_id } }).event())
+        return root.event || (await db.event_tasks.findOne({ where: { event_task_id: root.event_task_id } }).event())
       }
     })
     t.field('created_by', {
@@ -20,7 +21,7 @@ export const EventTask = objectType({
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.created_by || (await db.eventTask.findOne({ where: { event_task_id: root.event_task_id } }).created_by())
+        return root.created_by || (await db.event_tasks.findOne({ where: { event_task_id: root.event_task_id } }).created_by())
       }
     })
   }

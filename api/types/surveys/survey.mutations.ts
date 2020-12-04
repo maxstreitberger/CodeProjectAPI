@@ -7,7 +7,7 @@ const createSurvey = mutationField('createSurvey', {
     question: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.survey.create({
+    return db.surveys.create({
       data: {
         question: args.question,
         event: {
@@ -27,7 +27,7 @@ const updateSurvey = mutationField('updateSurvey', {
     newQuestion: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.survey.update({
+    return db.surveys.update({
       where: {
         survey_id: args.survey_id
       },
@@ -44,7 +44,7 @@ const deleteSurvey = mutationField('deleteSurvey', {
     survey_id: idArg({ required: true }),
   },
   resolve(_root, args, { db }) {
-    return db.survey.delete({
+    return db.surveys.delete({
       where: {
         survey_id: args.survey_id
       }

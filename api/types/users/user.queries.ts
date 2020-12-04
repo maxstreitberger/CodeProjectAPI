@@ -3,7 +3,7 @@ import { idArg, queryField, stringArg } from '@nexus/schema'
 const me = queryField('me', {
   type: 'User',
   resolve(_root, _args, { db, user }) {
-    return db.user.findOne({
+    return db.users.findOne({
       where: {
         user_id: user.user_id
       }
@@ -16,7 +16,7 @@ const allUsers = queryField('allUsers', {
   nullable: false,
   list: true,
   resolve(_root, _args, { db }) {
-    return db.user.findMany()
+    return db.users.findMany()
   }
 })
 
@@ -26,7 +26,7 @@ const getUser = queryField('getUser', {
     user_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.user.findOne({
+    return db.users.findOne({
       where: {
         user_id: args.user_id
       }
@@ -39,7 +39,7 @@ const myVotes = queryField('myVotes', {
   list: true,
   nullable: false,
   resolve(_root, _args, { db, user }) {
-    return db.vote.findMany({
+    return db.votes.findMany({
       where: {
         user_id: user.user_id
       }

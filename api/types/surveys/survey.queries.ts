@@ -5,7 +5,7 @@ const allSurveys = queryField('allSurveys', {
   nullable: false,
   list: true,
   resolve(_root, _args, { db }) {
-    return db.survey.findMany()
+    return db.surveys.findMany()
   }
 })
 
@@ -15,7 +15,7 @@ const getSurvey = queryField('getSurvey', {
     survey_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.survey.findOne({
+    return db.surveys.findOne({
       where: {
         survey_id: args.survey_id 
       }

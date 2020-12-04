@@ -1,7 +1,7 @@
 import { rules } from '../../middleware/permissions/rules'
 import { createRateLimitRule, RedisStore } from 'graphql-rate-limit';
 import * as redis from 'redis'
-import { and } from 'graphql-shield';
+import { allow, and } from 'graphql-shield';
 
 const createLocalEventRateLimitRule = createRateLimitRule({ 
   identifyContext: (ctx) => ctx.req.ip, 
@@ -16,7 +16,8 @@ const createOnlineEventRateLimitRule = createRateLimitRule({
 });
 
 export const EventQueryPermissions = {
-  allEvents: rules.isAuthenticated,
+  allEvents: rules.isAdmin,
+  publicEvents: allow,
   getEvent: rules.isAuthenticated,
 } 
 

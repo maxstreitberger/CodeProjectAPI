@@ -5,7 +5,7 @@ const allGuests = queryField('allGuests', {
   list: true,
   nullable: true,
   resolve(_root, _args, { db }) {
-    return db.user_Event.findMany()
+    return db.user_event.findMany()
   }
 })
 
@@ -17,7 +17,7 @@ const guestFromEvent = queryField('guestsFromEvent', {
     event_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.user_Event.findMany({
+    return db.user_event.findMany({
       where: {
         event_id: args.event_id
       }

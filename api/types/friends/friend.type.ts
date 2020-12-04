@@ -8,7 +8,7 @@ export const Friend = objectType({
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.friend || (await db.friend.findOne({ where: { friend_id_following_user_id: { friend_id: root.friend_id, following_user_id: root.following_user_id } } }).friend())
+        return root.friend || (await db.friends.findOne({ where: { friend_id_following_user_id: { friend_id: root.friend_id, following_user_id: root.following_user_id } } }).friend())
       }
     })
     t.field('following_user', {
@@ -16,7 +16,7 @@ export const Friend = objectType({
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.following_user || (await db.friend.findOne({ where: { friend_id_following_user_id: { friend_id: root.friend_id, following_user_id: root.following_user_id } } }).following_user())
+        return root.following_user || (await db.friends.findOne({ where: { friend_id_following_user_id: { friend_id: root.friend_id, following_user_id: root.following_user_id } } }).following_user())
       }
     })
   }

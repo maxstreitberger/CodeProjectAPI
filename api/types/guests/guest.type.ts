@@ -8,7 +8,7 @@ export const Guest = objectType({
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.event || (await db.user_Event.findOne({ where: { event_id_user_id: { event_id: root.event_id, user_id: root.user_id } } }).event())
+        return root.event || (await db.user_event.findOne({ where: { event_id_user_id: { event_id: root.event_id, user_id: root.user_id } } }).event())
       }
     })
     t.field('guest', {
@@ -16,7 +16,7 @@ export const Guest = objectType({
       nullable: false,
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.user || (await db.user_Event.findOne({ where: { event_id_user_id: { event_id: root.event_id, user_id: root.user_id } } }).user())
+        return root.user || (await db.user_event.findOne({ where: { event_id_user_id: { event_id: root.event_id, user_id: root.user_id } } }).user())
       }
     })
   }

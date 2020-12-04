@@ -1,4 +1,5 @@
 require('dotenv').config()
+import { AuthenticationError } from "apollo-server"
 import { Request } from "express"
 import * as jwt from 'jsonwebtoken'
 import * as redis from 'redis'
@@ -14,13 +15,17 @@ export const getUserFromRequest = async(req: Request) => {
   }
   if (authToken) {
     try {
-      const { sub, role } = jwt.verify(authToken, APP_SECRET!) as { sub: string, role: string }
+      const { sub, role, confirmed } = jwt.verify(authToken, APP_SECRET!) as { sub: string, role: string, confirmed: boolean }
       const user = {
         "user_id": sub,
         "role": role
       }
 
-      return user
+      if (confirmed) {
+        return user
+      } else {
+        throw new AuthenticationError("You have to confirm this account first.")
+      }
     } catch (e) {
       console.log(e)
       return undefined

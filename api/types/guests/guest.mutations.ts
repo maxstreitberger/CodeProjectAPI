@@ -7,7 +7,7 @@ const joinEvent = mutationField('joinEvent', {
   },
   resolve: async (_root, args, { db, user }) => {
     try {
-      await db.user_Event.create({
+      await db.user_event.create({
         data: {
           event: {
             connect: {            
@@ -37,7 +37,7 @@ const leaveEvent = mutationField('leaveEvent', {
   },
   resolve: async (_root, args, { db, user }) => {
     try {
-      await db.user_Event.delete({
+      await db.user_event.delete({
         where: {
           event_id_user_id: {
             event_id: args.event_id, 

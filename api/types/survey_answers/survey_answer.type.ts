@@ -9,14 +9,14 @@ export const SurveyAnswer = objectType({
       type: "Survey",
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        return root.survey || (await db.surveyAnswer.findOne({ where: { answer_id: root.answer_id } }).survey())
+        return root.survey || (await db.survey_answers.findOne({ where: { answer_id: root.answer_id } }).survey())
       }
     })
     t.field("likes", {
       type: "Int",
       resolve: async (root, _args, { db }) => {
         //@ts-ignore
-        const allVotes = await db.surveyAnswer.findOne({ where: { answer_id: root.answer_id } }).votes()
+        const allVotes = await db.survey_answers.findOne({ where: { answer_id: root.answer_id } }).votes()
         return allVotes.length
       }
     })

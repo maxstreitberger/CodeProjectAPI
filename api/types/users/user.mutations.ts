@@ -27,7 +27,7 @@ const Register = mutationField('register', {
 
     try {
       const password = await bcrypt.hash(args.password, 10)
-      const user = await ctx.db.user.create({
+      const user = await ctx.db.users.create({
         data: {
           username: args.username,
           first_name: args.first_name,
@@ -38,7 +38,7 @@ const Register = mutationField('register', {
         }
       })
 
-      const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email, role: user.role }, APP_SECRET!, {expiresIn: 2419200})
+      const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email, role: user.role, confirmed: user.confirmed }, APP_SECRET!, {expiresIn: 2419200})
 
       const url = ctx.req.protocol + "://" + ctx.req.hostname + ':4000'
       const link = await createConfirmEmailLink(url, user.user_id)
@@ -64,7 +64,7 @@ const Login = mutationField('login', {
   },
   async resolve(_root, args, ctx) {
     try {
-      const user = await ctx.db.user.findOne({
+      const user = await ctx.db.users.findOne({
         where: {
           email: args.email
         }
@@ -84,7 +84,7 @@ const Login = mutationField('login', {
         throw new AuthenticationError('Invalid credentials')
       }
     
-      const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email, role: user.role }, APP_SECRET!, {expiresIn: 2419200})
+      const token = jwt.sign({ sub: user.user_id, username: user.username, email: user.email, role: user.role, confirmed: user.confirmed }, APP_SECRET!, {expiresIn: 2419200})
 
       return {
         user,
@@ -106,7 +106,7 @@ const UpdateUserData = mutationField('updateUser', {
   },
   resolve(_root, args, { db, req }) {
     try {
-      return db.user.update({
+      return db.users.update({
         where: {
           user_id: args.user_id
         },
@@ -127,7 +127,7 @@ const DeleteUser = mutationField('deleteUser', {
     user_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.user.delete({ where: { user_id: args.user_id } })
+    return db.users.delete({ where: { user_id: args.user_id } })
   }
 })
 

@@ -5,7 +5,7 @@ const allCountries = queryField('allCountries', {
   nullable: false,
   list: true,
   resolve(_root, _args, { db }) {
-    return db.country.findMany()
+    return db.countries.findMany()
   }
 })
 
@@ -17,7 +17,7 @@ const allEventsFromCountry = queryField('allEventsFromCountry', {
     country: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.event.findMany({
+    return db.events.findMany({
       where: {
         country: {
           name: args.country

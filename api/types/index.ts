@@ -9,6 +9,7 @@ import { SurveyAnswerSchema } from './survey_answers'
 import { VoteSchema } from './votes'
 import { CitySchema } from './cities'
 import { CountrySchema } from './countries'
+import { JoinedEventSchema } from './joined_events'
 
 export const types = [
   EventSchema,
@@ -21,5 +22,6 @@ export const types = [
   SurveyAnswerSchema,
   VoteSchema,
   CitySchema,
-  CountrySchema
+  CountrySchema,
+  JoinedEventSchema
 ]

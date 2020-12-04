@@ -6,7 +6,7 @@ const follow = mutationField('follow', {
     friend_id: idArg({ required: true })
   },
   resolve(_root, args, { db, user }) {
-    return db.friend.create({
+    return db.friends.create({
       data: {
         friend: {
           connect: {
@@ -30,12 +30,16 @@ const unfollow = mutationField('unfollow', {
     friend_id: idArg({ required: true })
   },
   resolve(_root, args, { db, user }) {
-    return db.friend.delete({
+    return db.friends.delete({
       where: {
         friend_id_following_user_id: {
           friend_id: args.friend_id,
           following_user_id: user.user_id
         }
+      }, 
+      include: {
+        friend: {},
+        following_user: {}
       }
     })
   }

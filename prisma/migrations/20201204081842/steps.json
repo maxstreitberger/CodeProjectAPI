@@ -1,0 +1,448 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "event_tasks",
+      "field": "event",
+      "type": "events",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "event_tasks",
+          "field": "event"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "event_tasks",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "event_tasks",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "event_tasks",
+      "field": "events"
+    },
+    {
+      "tag": "CreateField",
+      "model": "surveys",
+      "field": "event",
+      "type": "events",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "surveys",
+          "field": "event"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "surveys",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "surveys",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "surveys",
+      "field": "events"
+    },
+    {
+      "tag": "CreateField",
+      "model": "user_event",
+      "field": "event",
+      "type": "events",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "user_event",
+          "field": "event"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "user_event",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "user_event",
+          "field": "event"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[event_id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "user_event",
+      "field": "user",
+      "type": "users",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "user_event",
+          "field": "user"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "user_event",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "user_event",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "user_event",
+      "field": "events"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "user_event",
+      "field": "users"
+    },
+    {
+      "tag": "CreateField",
+      "model": "users",
+      "field": "following_users",
+      "type": "friends",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "users",
+          "field": "following_users"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "users",
+          "field": "following_users"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"friends_following_user_idTousers\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "users",
+      "field": "friends",
+      "type": "friends",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "users",
+          "field": "friends"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "users",
+          "field": "friends"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"friends_friend_idTousers\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "users",
+      "field": "joined_events",
+      "type": "user_event",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "users",
+      "field": "friends_friends_following_user_idTousers"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "users",
+      "field": "friends_friends_friend_idTousers"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "users",
+      "field": "user_event"
+    },
+    {
+      "tag": "CreateField",
+      "model": "votes",
+      "field": "answer",
+      "type": "survey_answers",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "answer"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "answer"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[answer_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "answer"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[answer_id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "votes",
+      "field": "survey",
+      "type": "surveys",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "survey"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "survey"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[survey_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "survey"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[survey_id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "votes",
+      "field": "user",
+      "type": "users",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "user"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "user"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "votes",
+      "field": "survey_answers"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "votes",
+      "field": "surveys"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "votes",
+      "field": "users"
+    }
+  ]
+}

@@ -7,7 +7,7 @@ const createVote = mutationField('createVote', {
     answer_id: idArg({ required: true })
   },
   resolve(_root, args, { db, user }) {
-    return db.vote.create({
+    return db.votes.create({
       data: {
         answer: {
           connect: {
@@ -35,7 +35,7 @@ const deleteVote = mutationField('deleteVote', {
     survey_id: idArg({ required: true }),
   },
   resolve(_root, args, { db, user }) {
-    return db.vote.delete({
+    return db.votes.delete({
       where: {
         survey_id_user_id: {
           survey_id: args.survey_id,

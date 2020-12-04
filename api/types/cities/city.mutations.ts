@@ -6,7 +6,7 @@ const createCity = mutationField('createCity', {
     name: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.city.create({
+    return db.cities.create({
       data: {
         name: args.name
       }
@@ -20,7 +20,7 @@ const deleteCity = mutationField('deleteCity', {
     name: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.city.delete({
+    return db.cities.delete({
       where: {
         name: args.name
       }

@@ -7,9 +7,10 @@ export const City = objectType({
     t.field('events', {
       type: 'Event',
       nullable: false,
+      list: true,
       resolve: async(root, _args, { db }) => {
         //@ts-ignore
-        return root.events || (await db.city.findMany({ where: { city_id: root.city_id } }).events())
+        return root.events || (await db.cities.findOne({ where: { name: root.name } }).events())
       }
     })
   }

@@ -6,14 +6,7 @@ export const PrivateTask = objectType({
     t.string('private_task_id')
     t.string('title')
     t.string('description')
-    t.string('deadline')
-    // t.field('created_by', {
-    //   type: 'User',
-    //   nullable: false,
-    //   resolve: async (root, _args, { db }) => {
-    //     //@ts-ignore
-    //     return root.created_by || (await db.eventTask.findOne({ where: { task_id: root.task_id } }).created_by())
-    //   }
-    // })
+    t.date('deadline')
+    t.boolean('done')
   }
 })

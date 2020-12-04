@@ -4,7 +4,7 @@ const allEventTasks = queryField('allTasks', {
   type: 'EventTask',
   list: true,
   resolve(_too, _args, { db }) {
-    return db.eventTask.findMany()
+    return db.event_tasks.findMany()
   }
 })
 
@@ -15,7 +15,7 @@ const getEventTask = queryField('getTask', {
   },
   list: true,
   resolve(_root, args, { db }) {
-    return db.eventTask.findMany({ 
+    return db.event_tasks.findMany({ 
       where: {
         event_task_id: args.event_task_id
       } 

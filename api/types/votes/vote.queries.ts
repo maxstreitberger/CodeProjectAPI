@@ -4,8 +4,8 @@ const allVotes = queryField('allVotes', {
   type: "Vote",
   list: true,
   nullable: false,
-  resolve(_root, args, { db }) {
-    return db.vote.findMany()
+  resolve(_root, _args, { db }) {
+    return db.votes.findMany()
   }
 })
 
@@ -17,7 +17,7 @@ const getSurveyVotes = queryField('getSurveyVotes', {
     survey_id: idArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.vote.findMany({ 
+    return db.votes.findMany({ 
       where: { 
         survey_id: args.survey_id
       } 

@@ -6,7 +6,7 @@ const createCountry = mutationField('createCountry', {
     name: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
-    return db.country.create({
+    return db.countries.create({
       data: {
         name: args.name
       }

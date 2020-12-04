@@ -1,0 +1,131 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "events",
+      "field": "city",
+      "type": "cities",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "events",
+          "field": "city"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "events",
+          "field": "city"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[city_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "events",
+          "field": "city"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[name]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "events",
+      "field": "country",
+      "type": "countries",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "events",
+          "field": "country"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "events",
+          "field": "country"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[country_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "events",
+          "field": "country"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[name]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "events",
+      "field": "tasks",
+      "type": "event_tasks",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "events",
+      "field": "guests",
+      "type": "user_event",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "events",
+      "field": "cities"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "events",
+      "field": "countries"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "events",
+      "field": "event_tasks"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "events",
+      "field": "user_event"
+    }
+  ]
+}
