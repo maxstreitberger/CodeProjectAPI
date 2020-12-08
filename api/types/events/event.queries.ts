@@ -1,24 +1,6 @@
 import { idArg, intArg, queryField, stringArg } from '@nexus/schema'
 
-const allEvents = queryField('allEvents', {
-  nullable: false,
-  list: true,
-  type: 'Event',
-  args: {
-    take: intArg({ required: true }),
-    skip: intArg({ required: false }),
-  },
-  resolve(_root, args, { db }) {
-    let takeLimit: number = args.take > 50 ? 50 : args.take
-    let skipLimit: number = args.skip ? args.skip :  0
-    return db.events.findMany({
-      take: takeLimit,
-      skip: skipLimit
-    })
-  }
-})
-
-const allPublicEvents = queryField('publicEvents', {
+const allPublicEvents = queryField('allPublicEvents', {
   nullable: false,
   list: true,
   type: 'Event',
@@ -77,4 +59,4 @@ const myEvents = queryField('myEvents', {
   }
 })
 
-export const EventQueries = [allEvents, allPublicEvents, getEvent, myEvents]
+export const EventQueries = [allPublicEvents, getEvent, myEvents]

@@ -10,9 +10,8 @@ const createAnswerRateLimitRule = createRateLimitRule({
 });
 
 export const SurveyAnswerQueryPermissions = {
-  allSurveyAnswers: rules.isAdmin,
   getSurveyAnswer: rules.isAuthenticated,
-  getAllAnswersFromOneSurvey: rules.isAuthenticated
+  allAnswersOfSurvey: rules.isAuthenticated
 } 
 
 export const SurveyAnswerMutationPermissions = {

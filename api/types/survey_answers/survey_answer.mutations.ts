@@ -1,16 +1,19 @@
 import { idArg, mutationField, stringArg } from '@nexus/schema'
+import xss from 'xss';
 
 const createAnswer = mutationField('createAnswer', {
   type: "SurveyAnswer",
   args: {
     survey_id: idArg({ required: true }),
-    answer: stringArg({ required: true })
+    title: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
+    const title = xss(args.title);
+
     return db.survey_answers.create({
       data: {
-        answer: args.answer,
-        surveys: {
+        title: title,
+        survey: {
           connect: {
             survey_id: args.survey_id
           }
@@ -27,13 +30,15 @@ const updateAnswer = mutationField('updateAnswer', {
     newTitle: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
+    const title = xss(args.newTitle);
+
     return db.survey_answers.update({
       where: {
         answer_id: args.answer_id
       },
 
       data: {
-        answer: args.newTitle
+        title: title
       }
     })
   }

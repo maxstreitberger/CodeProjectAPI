@@ -9,7 +9,7 @@ const allCities = queryField('allCities', {
   }
 })
 
-const allEventsFromCity = queryField('allEventsFromCity', {
+const allCityEvents = queryField('allCityEvents', {
   type: 'Event',
   nullable: false,
   list: true,
@@ -27,4 +27,4 @@ const allEventsFromCity = queryField('allEventsFromCity', {
   }
 })
 
-export const CityQueries = [allCities, allEventsFromCity]
+export const CityQueries = [allCities, allCityEvents]

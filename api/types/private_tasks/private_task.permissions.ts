@@ -1,8 +1,8 @@
 import { rules } from '../../middleware/permissions/rules'
 
 export const PrivateTaskQueryPermissions = { 
-  allPrivateTasks: rules.isAdmin,
-  getPrivateTask: rules.isAuthenticated
+  getPrivateTask: rules.isAuthenticated,
+  myTasks: rules.isAuthenticated
 }
 
 export const PrivateTaskMutationPermissions = {

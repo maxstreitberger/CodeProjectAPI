@@ -1,0 +1,17 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "surveys",
+      "field": "answers",
+      "type": "survey_answers",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "surveys",
+      "field": "survey_answers"
+    }
+  ]
+}

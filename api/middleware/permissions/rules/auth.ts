@@ -1,9 +1,9 @@
 import { rule } from 'graphql-shield'
 
 export const auth = {
-  isAuthenticated: rule()(async (root, args, { user }) => {
+  isAuthenticated: rule()(async (_root, _args, { user }) => {
     if (!user) {
-      return "Auth: The Authorization token you provided is invalid/expired. You'll need to use a different one."
+      return "Either you haven't provided a token or the token is invalid/expired. Please use a valid one. "
     } else {
       return true
     }

@@ -1,5 +1,5 @@
 import { createRateLimitRule, RedisStore } from 'graphql-rate-limit';
-import { allow, and, not } from 'graphql-shield'
+import { and, not } from 'graphql-shield'
 import { rules } from '../../middleware/permissions/rules'
 import * as redis from 'redis'
 
@@ -18,13 +18,12 @@ const regsiterRateLimitRule = createRateLimitRule({
 export const UserQueryPermissions = {
   allUsers: rules.isAuthenticated,
   me: rules.isAuthenticated,
-  getUser: rules.isAuthenticated,
-  myVotes: rules.isAuthenticated
+  getUser: rules.isAuthenticated
 }
 
 export const UserMutationPermissions = {
   login: and(not(rules.isAuthenticated), loginRateLimitRule({ window: "1m", max: 10 })),
   register: and(not(rules.isAuthenticated), regsiterRateLimitRule({ window: "5m", max: 50 })),
   updateUser: rules.isAuthenticated,
-  deleteUser: rules.isAuthenticated
+  deleteUser: rules.isAdmin
 }

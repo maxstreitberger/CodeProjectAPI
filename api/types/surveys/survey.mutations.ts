@@ -1,4 +1,6 @@
 import { idArg, mutationField, stringArg } from '@nexus/schema'
+import { AuthenticationError } from 'apollo-server'
+import xss from 'xss';
 
 const createSurvey = mutationField('createSurvey', {
   type: "Survey",
@@ -6,17 +8,31 @@ const createSurvey = mutationField('createSurvey', {
     event_id: idArg({ required: true }),
     question: stringArg({ required: true })
   },
-  resolve(_root, args, { db }) {
-    return db.surveys.create({
-      data: {
-        question: args.question,
-        event: {
-          connect: {
-            event_id: args.event_id
-          }
-        }
+  resolve: async(_root, args, { db, user }) => {
+    const question = xss(args.question);
+
+    const user_events = await db.events.findMany({
+      where: {
+        host_id: user.user_id
       }
     })
+    
+    const isInList = Boolean(user_events.find(event => event.event_id == args.event_id))
+
+    if (isInList) {
+      return db.surveys.create({
+        data: {
+          question: question,
+          event: {
+            connect: {
+              event_id: args.event_id
+            }
+          }
+        }
+      })
+    } else {
+      throw new AuthenticationError("You are not allowed to do this")
+    }
   }
 })
 
@@ -26,15 +42,34 @@ const updateSurvey = mutationField('updateSurvey', {
     survey_id: idArg({ required: true }),
     newQuestion: stringArg({ required: true })
   },
-  resolve(_root, args, { db }) {
-    return db.surveys.update({
+  resolve: async(_root, args, { db, user }) => {
+    const question = xss(args.newQuestion);
+
+    const user_events = await db.events.findMany({
       where: {
-        survey_id: args.survey_id
-      },
-      data: {
-        question: args.newQuestion
+        host_id: user.user_id
       }
     })
+
+    const survey = await db.surveys.findOne({
+      where: {
+        survey_id: args.survey_id
+      }
+    })
+    
+    const isInList = Boolean(user_events.find(event => event.event_id == survey?.event_id))
+    if (isInList) {
+      return db.surveys.update({
+        where: {
+          survey_id: args.survey_id
+        },
+        data: {
+          question: question
+        }
+      })
+    } else {
+      throw new AuthenticationError("You are not allowed to do this")
+    }
   }
 })
 
@@ -43,12 +78,30 @@ const deleteSurvey = mutationField('deleteSurvey', {
   args: {
     survey_id: idArg({ required: true }),
   },
-  resolve(_root, args, { db }) {
-    return db.surveys.delete({
+  resolve: async(_root, args, { db, user }) => {
+    const user_events = await db.events.findMany({
+      where: {
+        host_id: user.user_id
+      }
+    })
+
+    const survey = await db.surveys.findOne({
       where: {
         survey_id: args.survey_id
       }
     })
+    
+    const isInList = Boolean(user_events.find(event => event.event_id == survey?.event_id))
+
+    if (isInList) {
+      return db.surveys.delete({
+        where: {
+          survey_id: args.survey_id
+        }
+      })
+    } else {
+      throw new AuthenticationError("You are not allowed to do this")
+    }
   }
 })
 

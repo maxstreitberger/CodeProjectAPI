@@ -1,15 +1,6 @@
 import { idArg, queryField, stringArg } from '@nexus/schema'
 
-const allGuests = queryField('allGuests', {
-  type: "Guest",
-  list: true,
-  nullable: true,
-  resolve(_root, _args, { db }) {
-    return db.user_event.findMany()
-  }
-})
-
-const guestFromEvent = queryField('guestsFromEvent', {
+const allGuestOfTheEvent = queryField('allGuestOfTheEvent', {
   type: "Guest",
   list: true,
   nullable: true,
@@ -25,4 +16,4 @@ const guestFromEvent = queryField('guestsFromEvent', {
   }
 })
 
-export const GuestQueries = [allGuests, guestFromEvent]
+export const GuestQueries = [allGuestOfTheEvent]

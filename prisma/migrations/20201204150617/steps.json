@@ -1,0 +1,92 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "events",
+      "field": "invited_users",
+      "type": "user_event",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "events",
+      "field": "guests"
+    },
+    {
+      "tag": "CreateField",
+      "model": "survey_answers",
+      "field": "title",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "survey_answers",
+      "field": "answer"
+    },
+    {
+      "tag": "CreateField",
+      "model": "users",
+      "field": "my_tasks",
+      "type": "private_tasks",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "users",
+      "field": "private_tasks"
+    },
+    {
+      "tag": "CreateField",
+      "model": "votes",
+      "field": "who_voted",
+      "type": "users",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "who_voted"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "who_voted"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "votes",
+          "field": "who_voted"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[user_id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "votes",
+      "field": "user"
+    }
+  ]
+}

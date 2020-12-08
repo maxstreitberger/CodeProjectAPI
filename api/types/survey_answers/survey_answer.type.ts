@@ -4,7 +4,7 @@ export const SurveyAnswer = objectType({
   name: "SurveyAnswer",
   definition(t) {
     t.string("answer_id")
-    t.string("answer")
+    t.string("title")
     t.field("survey", {
       type: "Survey",
       resolve: async (root, _args, { db }) => {

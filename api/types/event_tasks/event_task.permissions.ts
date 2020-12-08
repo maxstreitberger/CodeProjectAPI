@@ -1,8 +1,8 @@
 import { rules } from '../../middleware/permissions/rules'
 
 export const EventTaskQueryPermissions = { 
-  allTasks: rules.isAdmin,
-  getTask: rules.isAuthenticated
+  getEventTask: rules.isAuthenticated,
+  allTasksOfEvent: rules.isAuthenticated
 }
 
 export const EventTaskMutationPermissions = {

@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model cities {
@@ -54,7 +54,7 @@ model events {
   host                    users         @relation(fields: [host_id], references: [user_id])
   tasks                   event_tasks[]
   surveys                 surveys[]
-  invited_users           user_event[]
+  guests                  user_event[]
 
   @@index([title], name: "event_title_idx")
 }
@@ -83,9 +83,9 @@ model private_tasks {
 model survey_answers {
   answer_id  String    @id @default(cuid())
   survey_id  String
-  title      String?
+  answer     String?
   created_at DateTime? @default(now())
-  survey     surveys   @relation(fields: [survey_id], references: [survey_id])
+  surveys    surveys   @relation(fields: [survey_id], references: [survey_id])
   votes      votes[]
 }
 
@@ -126,7 +126,7 @@ model users {
   events                                   events[]
   following_users                          friends[]       @relation("friends_following_user_idTousers")
   friends                                  friends[]       @relation("friends_friend_idTousers")
-  my_tasks                                 private_tasks[]
+  private_tasks                            private_tasks[]
   joined_events                            user_event[]
   votes                                    votes[]
 
@@ -141,7 +141,7 @@ model votes {
   answer_id      String
   answer         survey_answers @relation(fields: [answer_id], references: [answer_id])
   survey         surveys        @relation(fields: [survey_id], references: [survey_id])
-  who_voted      users          @relation(fields: [user_id], references: [user_id])
+  user           users          @relation(fields: [user_id], references: [user_id])
 
   @@id([survey_id, user_id])
 }

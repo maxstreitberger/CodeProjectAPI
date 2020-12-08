@@ -8,11 +8,13 @@ import { applyMiddleware } from 'graphql-middleware'
 import { permissions } from './middleware/permissions'
 import * as redis from 'redis'
 import { PrismaClient } from '@prisma/client';
+import depthLimit from 'graphql-depth-limit'
 
 const permissionsSchema = applyMiddleware(schema, permissions)
 
 export const server = new ApolloServer({ 
   schema: permissionsSchema,
+  validationRules: depthLimit(4),
   context: async ({ req }) => {
     const user = await getUserFromRequest(req)
     return {
@@ -38,7 +40,7 @@ app.get('/confirm/:token', async (req, res) => {
   redisClient.get(token, async (err, res) => {
     console.log(res)
     if (res) {
-      await prismaClient.user.update({ 
+      await prismaClient.users.update({ 
         where: {
           user_id: res!
         },

@@ -1,14 +1,5 @@
 import { idArg, queryField } from '@nexus/schema'
 
-const allSurveyAnswers = queryField('allSurveyAnswers', {
-  type: "SurveyAnswer",
-  nullable: false,
-  list: true,
-  resolve(_root, _args, { db }) {
-    return db.survey_answers.findMany()
-  }
-})
-
 const getSurveyAnswer = queryField('getSurveyAnswer', {
   type: "SurveyAnswer",
   args: {
@@ -23,7 +14,7 @@ const getSurveyAnswer = queryField('getSurveyAnswer', {
   }
 })
 
-const getAllAnswersFromOneSurvey = queryField('getAllAnswersFromOneSurvey', {
+const allAnswersOfSurvey = queryField('allAnswersOfSurvey', {
   type: "SurveyAnswer",
   nullable: true,
   list: true,
@@ -39,4 +30,4 @@ const getAllAnswersFromOneSurvey = queryField('getAllAnswersFromOneSurvey', {
   }
 })
 
-export const SurveyAnswerQueries = [allSurveyAnswers, getSurveyAnswer, getAllAnswersFromOneSurvey]
+export const SurveyAnswerQueries = [getSurveyAnswer, allAnswersOfSurvey]

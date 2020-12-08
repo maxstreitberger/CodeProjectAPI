@@ -26,8 +26,7 @@ export const getUserFromRequest = async(req: Request) => {
       } else {
         throw new AuthenticationError("You have to confirm this account first.")
       }
-    } catch (e) {
-      console.log(e)
+    } catch {
       return undefined
     }
   }

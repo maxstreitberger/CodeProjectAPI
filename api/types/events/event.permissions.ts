@@ -16,8 +16,7 @@ const createOnlineEventRateLimitRule = createRateLimitRule({
 });
 
 export const EventQueryPermissions = {
-  allEvents: rules.isAdmin,
-  publicEvents: allow,
+  allPublicEvents: allow,
   getEvent: rules.isAuthenticated,
 } 
 

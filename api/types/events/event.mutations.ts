@@ -1,5 +1,8 @@
+import { sanitizeUrl } from '@braintree/sanitize-url'
 import { booleanArg, idArg, intArg, mutationField, stringArg } from '@nexus/schema'
 import { EventType } from '@prisma/client'
+import { AuthenticationError } from 'apollo-server'
+import xss from 'xss'
 
 const createLocalEvent = mutationField('createLocalEvent', {
   type: 'Event',
@@ -16,22 +19,30 @@ const createLocalEvent = mutationField('createLocalEvent', {
     description: stringArg({ required: false })
   },
   resolve(_root, args, ctx) {
+    const title = xss(args.title);
+    const date = xss(args.date)
+    const start = xss(args.event_start);
+    const street_and_house_number = xss(args.street_and_house_number);
+    const city = xss(args.city);
+    const country = xss(args.country);
+    const description = xss(args.description ? args.description : '')
+
     return ctx.db.events.create({
       data: {
-        title: args.title,
-        date: new Date(args.date),
-        event_start: args.event_start,
-        description: args.description,
-        street_and_house_number: args.street_and_house_number,
+        title: title,
+        date: new Date(date),
+        event_start: start,
+        description: description,
+        street_and_house_number: street_and_house_number,
         zip: args.zip,
         city: {
           connect: {
-            name: args.city
+            name: city
           }
         },
         country: {
           connect: {
-            name: args.country
+            name: country
           }
         },
         event_type: EventType.LOCAL,
@@ -58,13 +69,18 @@ const createOnlineEvent = mutationField('createOnlineEvent', {
     description: stringArg({ required: false })
   },
   resolve(_root, args, ctx) {
+    const title = xss(args.title);
+    const date = xss(args.date)
+    const start = xss(args.event_start);
+    const description = xss(args.description ? args.description : '')
+
     return ctx.db.events.create({
       data: {
-        title: args.title,
-        date: new Date(args.date),
-        event_start: args.event_start,
-        description: args.description,
-        meeting_link: args.link,
+        title: title,
+        date: new Date(date),
+        event_start: start,
+        description: description,
+        meeting_link: sanitizeUrl(args.link),
         event_type: EventType.ONLINE,
         is_public: args.is_public,
         host: {
@@ -93,27 +109,37 @@ const updateLocalEvent = mutationField('updateLocalEvent', {
 
     description: stringArg({ required: false })
   },
-  resolve(_root, args, ctx) {
-    return ctx.db.events.update({
+  resolve: async(_root, args, { db, user }) => {
+    const currentEvent = await db.events.findOne({
       where: {
         event_id: args.event_id
-      },
-      data: {
-        ...args,
-        event_type: args.event_type as EventType,
-        date: new Date(args.date),
-        city: {
-          connect: {
-            name: args.city
-          }
-        },
-        country: {
-          connect: {
-            name: args.country
-          }
-        }
       }
     })
+
+    if (user.user_id == currentEvent?.host_id) {
+      return db.events.update({
+        where: {
+          event_id: args.event_id
+        },
+        data: {
+          ...args,
+          event_type: args.event_type as EventType,
+          date: new Date(args.date),
+          city: {
+            connect: {
+              name: args.city
+            }
+          }, 
+          country: {
+            connect: {
+              name: args.country
+            }
+          }
+        }
+      })
+    } else {
+      throw new AuthenticationError("You are not allowed to do this")
+    }
   }
 })
 
@@ -123,24 +149,43 @@ const updateOnlineEvent = mutationField('updateOnlineEvent', {
     event_id: idArg({ required: true }),
     title: stringArg({ required: true }),
     date: stringArg({ required: true }),
-    event_start: stringArg({ required: false }),
-    event_type: stringArg({ required: false }),
+    event_start: stringArg({ required: true }),
+    event_type: stringArg({ required: true }),
     is_public: booleanArg({ required: false }),
-    meeting_link: stringArg({ required: false }),
+    link: stringArg({ required: true }),
 
-    description: stringArg({ required: false })
+    description: stringArg({ required: true })
   },
-  resolve(_root, args, ctx) {
-    return ctx.db.events.update({
+  resolve: async(_root, args, { db, user }) => {
+    const title = xss(args.title);
+    const date = xss(args.date)
+    const start = xss(args.event_start);
+    const description = xss(args.description ? args.description : '')
+
+    const currentEvent = await db.events.findOne({
       where: {
         event_id: args.event_id
-      },
-      data: {
-        ...args,
-        event_type: args.event_type as EventType,
-        date: new Date(args.date)
       }
     })
+
+    if (user.user_id == currentEvent?.host_id) {
+      return db.events.update({
+        where: {
+          event_id: args.event_id
+        },
+        data: {
+          title: title,
+          date: new Date(date),
+          event_start: start,
+          description: description,
+          meeting_link: sanitizeUrl(args.link),
+          is_public: args.is_public,
+          event_type: args.event_type as EventType,
+        }
+      })
+    } else {
+      throw new AuthenticationError("You are not allowed to do this")
+    }
   }
 })
 
@@ -149,16 +194,25 @@ const deleteEvent = mutationField('deleteEvent', {
   args: {
     event_id: idArg({ required: true })
   },
-  resolve(_root, args, ctx) {
-    return ctx.db.events.delete({
+  resolve: async(_root, args, { db, user }) => {
+    const currentEvent = await db.events.findOne({
       where: {
         event_id: args.event_id
-      },
-      include: {
-        city: {},
-        country: {},
       }
     })
+    if (user.user_id == currentEvent?.host_id) {
+      return db.events.delete({
+        where: {
+          event_id: args.event_id
+        },
+        include: {
+          city: {},
+          country: {},
+        }
+      })
+    } else {
+      throw new AuthenticationError("You are not allowed to do this")
+    }
   }
 })
 

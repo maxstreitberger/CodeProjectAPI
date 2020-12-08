@@ -1,11 +1,18 @@
 import { idArg, queryField } from '@nexus/schema'
 
-const allSurveys = queryField('allSurveys', {
+const allSurveysOfEvent = queryField('allSurveysOfEvent', {
   type: "Survey",
   nullable: false,
   list: true,
-  resolve(_root, _args, { db }) {
-    return db.surveys.findMany()
+  args: {
+    event_id: idArg({ required: true })
+  },
+  resolve(_root, args, { db }) {
+    return db.surveys.findMany({
+      where: {
+        event_id: args.event_id
+      }
+    })
   }
 })
 
@@ -23,4 +30,4 @@ const getSurvey = queryField('getSurvey', {
   }
 })
 
-export const SurveyQueries = [allSurveys, getSurvey]
+export const SurveyQueries = [getSurvey, allSurveysOfEvent]

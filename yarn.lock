@@ -311,6 +311,11 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
+"@braintree/sanitize-url@^5.0.0":
+  "integrity" "sha512-WmKrB/575EJCzbeSJR3YQ5sET5FaizeljLRw1382qVUeGqzuWBgIS+AF5a0FO51uQTrDpoRgvuHC2IWVsgwkkA=="
+  "resolved" "https://registry.npmjs.org/@braintree/sanitize-url/-/sanitize-url-5.0.0.tgz"
+  "version" "5.0.0"
+
 "@cnakazawa/watch@^1.0.3":
   "integrity" "sha512-v9kIhKwjeZThiWrLmj0y17CWoyddASLj9O2yvbZkbvw/N3rWOYy9zkV66ursAoVr0mV15bL8g0c4QZUE6cdDoQ=="
   "resolved" "https://registry.npmjs.org/@cnakazawa/watch/-/watch-1.0.4.tgz"
@@ -6349,7 +6354,7 @@
   "resolved" "https://registry.npmjs.org/xmlhttprequest-ssl/-/xmlhttprequest-ssl-1.5.5.tgz"
   "version" "1.5.5"
 
-"xss@^1.0.6":
+"xss@^1.0.6", "xss@^1.0.8":
   "integrity" "sha512-3MgPdaXV8rfQ/pNn16Eio6VXYPTkqwa0vc7GkiymmY/DqR1SE/7VPAAVZz1GJsJFrllMYO3RHfEaiUGjab6TNw=="
   "resolved" "https://registry.npmjs.org/xss/-/xss-1.0.8.tgz"
   "version" "1.0.8"

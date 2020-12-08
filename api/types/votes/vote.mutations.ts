@@ -1,6 +1,6 @@
 import { idArg, mutationField } from '@nexus/schema'
 
-const createVote = mutationField('createVote', {
+const vote = mutationField('vote', {
   type: "Vote",
   args: {
     survey_id: idArg({ required: true }),
@@ -19,7 +19,7 @@ const createVote = mutationField('createVote', {
             survey_id: args.survey_id
           }
         },
-        user: {
+        who_voted: {
           connect: {
             user_id: user.user_id
           }
@@ -46,4 +46,4 @@ const deleteVote = mutationField('deleteVote', {
   }
 })
 
-export const VoteMutations = [createVote, deleteVote]
+export const VoteMutations = [vote, deleteVote]

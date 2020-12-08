@@ -26,7 +26,7 @@ const User = objectType({
         return root.event_tasks || (await db.users.findOne({ where: { user_id: root.user_id } }).event_tasks())
       }
     })
-    t.list.field('private_tasks', {
+    t.list.field('my_tasks', {
       type: "PrivateTask",
       nullable: false,
       resolve: async (root, _args, { db }) => {
@@ -42,7 +42,7 @@ const User = objectType({
         return root.joined_events || (await db.users.findOne({ where: { user_id: root.user_id } }).joined_events())
       }
     })
-    t.list.field('friends', {
+    t.list.field('relationships', {
       type: "Friend",
       nullable: false,
       resolve: async (root, _args, { db }) => {

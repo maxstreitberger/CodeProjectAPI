@@ -9,7 +9,7 @@ const allCountries = queryField('allCountries', {
   }
 })
 
-const allEventsFromCountry = queryField('allEventsFromCountry', {
+const allCountryEvents = queryField('allCountryEvents', {
   type: 'Event',
   nullable: false,
   list: true,
@@ -27,4 +27,4 @@ const allEventsFromCountry = queryField('allEventsFromCountry', {
   }
 })
 
-export const CountryQueries = [allCountries, allEventsFromCountry]
+export const CountryQueries = [allCountries, allCountryEvents]

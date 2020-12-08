@@ -1,13 +1,5 @@
 import { queryField } from '@nexus/schema'
 
-const allFriends = queryField('allFriends', {
-  type: "Friend",
-  list: true,
-  resolve(_root, _args, { db }) {
-    return db.friends.findMany()
-  }
-})
-
 const myFriends = queryField('myFriends', {
   type: "Friend",
   list: true,
@@ -20,4 +12,4 @@ const myFriends = queryField('myFriends', {
   }
 })
 
-export const FriendQueries = [allFriends, myFriends]
+export const FriendQueries = [myFriends]

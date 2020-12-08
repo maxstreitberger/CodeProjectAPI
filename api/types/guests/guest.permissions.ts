@@ -1,7 +1,7 @@
 import { rules } from '../../middleware/permissions/rules'
 
 export const GuestQueryPermissions = {
-  allGuests: rules.isAdmin
+  allGuestOfTheEvent: rules.isAuthenticated
 }
 
 export const GuestMutationPermissions = {

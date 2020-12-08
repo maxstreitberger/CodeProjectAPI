@@ -30,7 +30,7 @@ export const Event = objectType({
         return root.tasks || (await db.events.findOne({ where: { event_id: root.event_id } }).tasks())
       }
     })
-    t.list.field('guests', {
+    t.list.field('invited_users', {
       type: 'Guest',
       nullable: false,
       resolve: async (root, _args, { db }) => {

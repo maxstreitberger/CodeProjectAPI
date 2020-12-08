@@ -1,0 +1,56 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "survey_answers",
+      "field": "survey",
+      "type": "surveys",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "survey_answers",
+          "field": "survey"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "survey_answers",
+          "field": "survey"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[survey_id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "survey_answers",
+          "field": "survey"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[survey_id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "survey_answers",
+      "field": "surveys"
+    }
+  ]
+}

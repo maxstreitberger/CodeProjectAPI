@@ -10,7 +10,7 @@ const followRateLimitRule = createRateLimitRule({
 });
 
 export const FriendQueryPermissions = {
-  allFriends: rules.isAdmin
+  myFriends: rules.isAuthenticated
 }
 
 export const FriendMutationPermissions = {

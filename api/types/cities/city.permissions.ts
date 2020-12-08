@@ -2,7 +2,7 @@ import { rules } from '../../middleware/permissions/rules'
 
 export const CityQueryPermissions = {
   allCities: rules.isAuthenticated,
-  allEventsFromCity: rules.isAuthenticated
+  allCityEvents: rules.isAuthenticated
 } 
 
 export const CityMutationPermissions = {

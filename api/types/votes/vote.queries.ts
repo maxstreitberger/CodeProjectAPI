@@ -1,16 +1,7 @@
 import { idArg, queryField } from '@nexus/schema'
 
-const allVotes = queryField('allVotes', {
-  type: "Vote",
-  list: true,
-  nullable: false,
-  resolve(_root, _args, { db }) {
-    return db.votes.findMany()
-  }
-})
-
 const getSurveyVotes = queryField('getSurveyVotes', {
-  type: "Vote",
+  type: "ShareAbleVote",
   list: true,
   nullable: false,
   args: {
@@ -25,4 +16,17 @@ const getSurveyVotes = queryField('getSurveyVotes', {
   }
 })
 
-export const VoteQueries = [allVotes, getSurveyVotes]
+const myVotes = queryField('myVotes', {
+  type: "Vote",
+  list: true,
+  nullable: false,
+  resolve(_root, _args, { db, user }) {
+    return db.votes.findMany({
+      where: {
+        user_id: user.user_id
+      }
+    })
+  }
+})
+
+export const VoteQueries = [getSurveyVotes, myVotes]

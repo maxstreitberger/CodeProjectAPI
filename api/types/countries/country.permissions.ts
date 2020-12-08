@@ -2,7 +2,7 @@ import { rules } from '../../middleware/permissions/rules'
 
 export const CountryQueryPermissions = {
   allCountries: rules.isAuthenticated,
-  allEventsFromCountry: rules.isAuthenticated
+  allCountryEvents: rules.isAuthenticated
 } 
 
 export const CountryMutationPermissions = {

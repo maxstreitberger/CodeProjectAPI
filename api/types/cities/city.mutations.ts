@@ -1,4 +1,5 @@
 import { mutationField, stringArg } from '@nexus/schema'
+import xss from 'xss';
 
 const createCity = mutationField('createCity', {
   type: 'City',
@@ -6,9 +7,11 @@ const createCity = mutationField('createCity', {
     name: stringArg({ required: true })
   },
   resolve(_root, args, { db }) {
+    const name = xss(args.name);
+
     return db.cities.create({
       data: {
-        name: args.name
+        name: name
       }
     })
   }
