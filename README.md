@@ -2,8 +2,6 @@
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Database](#database)
-- [Backend architecture diagram](#backend-architecture-diagram)
-- [Threat Model](#threat-model)
 - [Used technologies](#used-technologies)
 
 ## Introduction
